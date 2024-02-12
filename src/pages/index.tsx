@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <>
       <Layout>
-        <main>asdasdas</main>
+        <main className="text-3xl">asdasdas</main>
       </Layout>
     </>
   );
