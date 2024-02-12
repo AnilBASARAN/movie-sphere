@@ -29,8 +29,8 @@ const Home: React.FC = () => {
 
   return (
     <Layout>
-      <div>
-        <form onSubmit={handleSearch}>
+      <div className="flex justify-center text-sm ">
+        {/* <form onSubmit={handleSearch}>
           <input
             type="text"
             id="search"
@@ -39,22 +39,30 @@ const Home: React.FC = () => {
             className="text-black"
           />
           <button type="submit">Search</button>
-        </form>
+        </form> */}
 
-        <div id="main">
+        <div
+          id="main"
+          className="grid grid-cols-6 justify-center  w-[1000px] gap-3 m-4"
+        >
           {movies.map((movie) => (
-            <div key={movie.id} className="movie">
-              <img src={`${IMG_URL + movie.poster_path}`} alt={movie.title} />
-
-              <div className="movie-info">
-                <h3>{movie.title}</h3>
-                <span>{movie.vote_average}</span>
+            <div key={movie.id} className="movie ">
+              <div className=" ">
+                <img
+                  src={`${IMG_URL + movie.poster_path}`}
+                  alt={movie.title}
+                  className=" border rounded-sm border-gray-400 cursor-pointer hover:border-green-400 transition"
+                />
               </div>
 
-              <div className="overview">
-                <h3>Overview</h3>
+              <div className="movie-info ">
+                {/* <h3>{movie.title}</h3> */}
+                {/* <span>{movie.vote_average}</span> */}
+              </div>
+
+              {/*  <div className="overview h-6 overflow-hidden">
                 {movie.overview}
-              </div>
+              </div> */}
             </div>
           ))}
         </div>
