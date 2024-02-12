@@ -1,7 +1,11 @@
+import Layout from "@/components/Layout";
+
 export default function Home() {
   return (
     <>
-      <main>asdasdas</main>
+      <Layout>
+        <main>asdasdas</main>
+      </Layout>
     </>
   );
 }
