@@ -30,8 +30,7 @@ export default function handler(
 
 export const API_KEY = "api_key=95c1bdf00d97593736866409336863ca";
 export const BASE_URL = "https://api.themoviedb.org/3";
-export const API_URL =
-  BASE_URL + "/discover/movie?sort_by=popularity.desc&" + API_KEY;
+export const API_URL = BASE_URL + "/trending/movie/week?" + API_KEY;
 export const IMG_URL = "https://image.tmdb.org/t/p/w200";
 export const searchURL = BASE_URL + "/search/movie?" + API_KEY;
 
