@@ -27,6 +27,8 @@ const Home: React.FC = () => {
     }
   };
 
+  console.log(movies);
+
   return (
     <Layout>
       <div className="flex justify-center text-sm ">
@@ -43,20 +45,22 @@ const Home: React.FC = () => {
 
         <div
           id="main"
-          className="grid grid-cols-6 justify-center  w-[1000px] gap-3 m-4"
+          className="grid grid-cols-5 justify-center  w-[1000px] gap-3 m-4"
         >
           {movies.map((movie) => (
             <div key={movie.id} className="movie ">
-              <div className=" ">
+              <div className=" relative flex text-center justify-center cursor-pointer border rounded-sm border-gray-400  hover:border-green-400 ">
                 <img
                   src={`${IMG_URL + movie.poster_path}`}
                   alt={movie.title}
-                  className=" border rounded-sm border-gray-400 cursor-pointer hover:border-green-400 transition"
+                  className=" "
                 />
+                <div className="absolute w-full h-full flex font-bold items-center justify-center opacity-0 bg-slate-950/[.0] transition hover:bg-slate-950/70 hover:opacity-100  ">
+                  <h3 className="">{movie.title}</h3>
+                </div>
               </div>
 
               <div className="movie-info ">
-                {/* <h3>{movie.title}</h3> */}
                 {/* <span>{movie.vote_average}</span> */}
               </div>
 
