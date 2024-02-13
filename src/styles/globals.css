@@ -40,3 +40,12 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+svg {
+  fill: rgb(203, 213, 225);
+  cursor: pointer;
+  transition: ease 0.1s;
+}
+svg:hover {
+  fill: rgb(255, 255, 255);
+}
