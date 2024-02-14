@@ -49,3 +49,7 @@ svg {
 svg:hover {
   fill: rgb(255, 255, 255);
 }
+
+.vote {
+  @apply text-yellow-400 mt-5;
+}
