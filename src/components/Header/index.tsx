@@ -21,10 +21,10 @@ function Header() {
           </svg>
         </div>
         <div>
-          <h3>Movies</h3>
+          <h1>All Movies</h1>
         </div>
         <div>
-          <h3>Animations</h3>
+          <button>Animations</button>
         </div>
         <div>
           <h3>Genres</h3>
@@ -37,7 +37,7 @@ function Header() {
           id="search"
           name="search"
           placeholder="Search"
-          className="w-64 h-8 rounded-3xl p-2 text-m"
+          className="w-64 h-8 rounded-3xl p-2 text-m text-black outline-none"
         />
       </div>
       <div>
