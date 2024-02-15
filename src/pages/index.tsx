@@ -16,6 +16,11 @@ const Home: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [activeItem, setActiveItem] = useState<string>("");
   const [count, setCount] = useState<number>(1);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
 
   // Get the Data
   useEffect(() => {
@@ -78,8 +83,8 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <header className="flex justify-center gap-8 items-center h-16 sticky top-0 left-0 right-0 bg-slate-950 z-50 ">
-        <div className="flex justify-center gap-8 items-center">
+      <header className="flex justify-center gap-12 items-center h-16 sticky top-0 left-0 right-0 bg-slate-950 z-50 ">
+        <div className="flex justify-center  items-center">
           <div>
             <svg
               width="24"
@@ -96,28 +101,53 @@ const Home: React.FC = () => {
               />
             </svg>
           </div>
-          <div>
+          <div className="flex relative hover:bg-blue-950 h-16 w-32 ">
             <button
               /*   onClick={allMovies} */
-              className={
+              /* className={
                 activeItem === "home" ? "text-yellow-400" : "text-white"
-              }
+              } */ className="text-center items-center w-full"
             >
               All movies
             </button>
           </div>
-          <div>
+          <div className="flex relative hover:bg-blue-950 h-16 w-32 ">
             <button
               /*  onClick={handleAnimations} */
               className={
-                activeItem === "animations" ? "text-yellow-400" : "text-white"
+                /* activeItem === "animations" ? "text-yellow-400" : "text-white" */ "text-center items-center w-full "
               }
             >
               Animations
             </button>
           </div>
-          <div>
-            <h3>Genres</h3>
+          <div className="flex relative hover:bg-blue-950 h-16 w-24 ">
+            <button
+              onMouseEnter={handleToggle}
+              onMouseLeave={handleToggle}
+              className=" text-center items-center w-full ease-out "
+            >
+              Genres
+            </button>
+            <div
+              className={
+                isOpen
+                  ? "absolute top-full -left-[150px] bg-blue-950 pt-2 pb-2 rounded-bl-sm rounded-br-sm grid grid-cols-3 w-[420px] "
+                  : ""
+              }
+              onMouseLeave={handleToggle}
+            >
+              {isOpen &&
+                genres.map((genre, index) => (
+                  <button
+                    key={index}
+                    id={genre.name}
+                    className="text-left pl-2 border-l-[1px] hover:text-yellow-400 "
+                  >
+                    {genre.name}
+                  </button>
+                ))}
+            </div>
           </div>
         </div>
 
