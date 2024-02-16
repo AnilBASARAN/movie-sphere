@@ -9,7 +9,6 @@ import {
   searchURL,
   getMovies,
   Movie,
-  animationURL,
   genres,
   GENRE_URL,
 } from "@/pages/api/api";
@@ -28,23 +27,23 @@ const Home: React.FC = () => {
 
   // Get Animations
   const handleAnimations = () => {
-    setCount(1);
     handleMovies({
       id: 16,
       name: "Animation",
     });
+    setCount(1);
   };
 
   // Search Functionality
   const handleSearch = (e: any) => {
-    setCount(1);
     handleMovies(e);
+    setCount(1);
   };
 
   // Get Genres
   const handleGenres = (e: any) => {
-    setCount(1);
     handleMovies(e);
+    setCount(1);
   };
 
   // Get All The Data Based On Their Type
@@ -111,7 +110,6 @@ const Home: React.FC = () => {
     IMG_URL,
     searchURL,
     getMovies,
-    animationURL,
     genres,
     GENRE_URL,
     refreshPage,
