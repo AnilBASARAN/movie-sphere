@@ -1,5 +1,5 @@
 /* import Layout from "@/components/Layout"; */
-import { MainContext } from "./context.js";
+import { MainContext } from "./context.js"; // React Context Api Structure
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useState, useEffect } from "react";
@@ -19,38 +19,70 @@ const Home: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [count, setCount] = useState<number>(1);
   const [isOpen, setIsOpen] = useState(false);
-  /* const [activeItem, setActiveItem] = useState<string>(""); */
-  /*  const [isHandleClick, setIsHandleClick] = useState(false); */
+  const [activeItem, setActiveItem] = useState<string>("");
 
-  const handleGenres = (id: any) => {
-    const fetchMovies = async () => {
-      const data = await getMovies(`${GENRE_URL}${id}&page=${count}`);
-      setMovies(data);
-    };
-    fetchMovies();
-  };
-
-  // Toggle functionality
+  // Toggle Functionality
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
 
-  // Get the Data
-  const fetchMovies = async () => {
-    if (!searchTerm) {
-      const data = await getMovies(`${API_URL}&page=${count}`);
-      setMovies(data);
-    } else {
+  // Get Animations
+  const handleAnimations = () => {
+    setCount(1);
+    handleMovies({
+      id: 16,
+      name: "Animation",
+    });
+  };
+
+  // Search Functionality
+  const handleSearch = (e: any) => {
+    setCount(1);
+    handleMovies(e);
+  };
+
+  // Get Genres
+  const handleGenres = (e: any) => {
+    setCount(1);
+    handleMovies(e);
+  };
+
+  // Get All The Data Based On Their Type
+  const handleMovies = async (genre: any) => {
+    if (genre.preventDefault) {
+      genre.preventDefault();
+      setActiveItem(genre);
       const searchResults = await getMovies(
         `${searchURL}&query=${searchTerm}&page=${count}`
       );
       setMovies(searchResults);
+    } else {
+      if (genre?.name) {
+        setActiveItem(genre);
+        const data = await getMovies(`${GENRE_URL}${genre.id}&page=${count}`);
+        setMovies(data);
+      } else if (genre) {
+        setActiveItem(genre);
+        const searchResults = await getMovies(
+          `${searchURL}&query=${searchTerm}&page=${count}`
+        );
+        setMovies(searchResults);
+      } else {
+        setActiveItem("");
+        const data = await getMovies(`${API_URL}&page=${count}`);
+        setMovies(data);
+      }
     }
   };
 
   useEffect(() => {
-    fetchMovies();
+    handleMovies(activeItem);
   }, [count]);
+
+  // Refresh page
+  const refreshPage = () => {
+    window.location.reload();
+  };
 
   // Pagination
   const increaseCount = () => {
@@ -63,33 +95,7 @@ const Home: React.FC = () => {
     }
   };
 
-  // Search Functionality
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (searchTerm) {
-      const searchResults = await getMovies(searchURL + "&query=" + searchTerm);
-      setMovies(searchResults);
-    } else {
-      const popularMovies = await getMovies(API_URL);
-      setMovies(popularMovies);
-    }
-  };
-
-  /* const handleAnimations = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const handleResult = await getMovies(animationURL);
-    setMovies(handleResult);
-    setActiveItem("animations");
-  };
-
-  const allMovies = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const handleResult = await getMovies(API_URL);
-    setMovies(handleResult);
-    setActiveItem("home");
-  }; */
-
+  // Fetching Datas To Components Via React Context Api
   const fetchToComponents = {
     movies,
     setMovies,
@@ -99,10 +105,8 @@ const Home: React.FC = () => {
     setCount,
     isOpen,
     setIsOpen,
-    handleGenres,
     handleToggle,
     handleSearch,
-    fetchMovies,
     API_URL,
     IMG_URL,
     searchURL,
@@ -110,6 +114,10 @@ const Home: React.FC = () => {
     animationURL,
     genres,
     GENRE_URL,
+    refreshPage,
+    handleMovies,
+    handleGenres,
+    handleAnimations,
   };
 
   return (
@@ -163,4 +171,3 @@ const Home: React.FC = () => {
 export default Home;
 
 // Might wanna try Splide to make carousels
-// Check out React context api
