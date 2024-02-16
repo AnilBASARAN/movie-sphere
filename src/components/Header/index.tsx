@@ -6,10 +6,12 @@ function Header() {
     searchTerm,
     setSearchTerm,
     isOpen,
-    handleGenres,
     handleToggle,
     handleSearch,
     genres,
+    refreshPage,
+    handleGenres,
+    handleAnimations,
   } = useContext(MainContext);
 
   return (
@@ -33,7 +35,7 @@ function Header() {
         </div>
         <div className="flex relative hover:bg-blue-950 h-16 w-32 ">
           <button
-            /*   onClick={allMovies} */
+            onClick={refreshPage}
             /* className={
             activeItem === "home" ? "text-yellow-400" : "text-white"
           } */ className="text-center items-center w-full"
@@ -43,7 +45,7 @@ function Header() {
         </div>
         <div className="flex relative hover:bg-blue-950 h-16 w-32 ">
           <button
-            /*  onClick={handleAnimations} */
+            onClick={handleAnimations}
             className={
               /* activeItem === "animations" ? "text-yellow-400" : "text-white" */ "text-center items-center w-full "
             }
@@ -62,7 +64,7 @@ function Header() {
           <div
             className={
               isOpen
-                ? "absolute top-full -left-[150px] bg-blue-950 pt-2 pb-2 rounded-bl-sm rounded-br-sm grid grid-cols-3 w-[420px] "
+                ? "absolute top-full -left-[150px] bg-blue-950 p-3  rounded-bl-sm rounded-br-sm grid grid-cols-3 w-[420px] "
                 : ""
             }
             onMouseLeave={handleToggle}
@@ -73,7 +75,7 @@ function Header() {
                   key={index}
                   id={genre.name}
                   className="text-left pl-2 border-l-[1px] hover:text-yellow-400 "
-                  onClick={() => handleGenres(genre.id)}
+                  onClick={() => handleGenres(genre)}
                 >
                   {genre.name}
                 </button>
