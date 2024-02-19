@@ -1,5 +1,6 @@
 import React from "react";
-import { MainContext, useContext } from "@/pages/context";
+import { MainContext } from "@/components/context";
+import { useContext } from "react";
 
 function Header() {
   const {
