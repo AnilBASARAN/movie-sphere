@@ -37,6 +37,9 @@ export const searchURL = BASE_URL + "/search/movie?" + API_KEY;
 export const animationURL = API_URL + "&with_genres=16";
 export const GENRE_URL = API_URL + "&with_genres=";
 export const denemeURL = BASE_URL + "/discover/movie?" + API_KEY + "&page=1";
+export const getMovieById = BASE_URL + "/movie/";
+
+(" ?language=en-US");
 
 console.log(denemeURL);
 
