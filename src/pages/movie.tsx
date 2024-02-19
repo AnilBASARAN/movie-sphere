@@ -1,27 +1,45 @@
-import React from "react";
-import Header from "@/components/Header";
+import React, { useState, useEffect } from "react";
 import Footer from "@/components/Footer";
-import { MainContext } from "./context.js";
-import {
-  API_URL,
-  IMG_URL,
-  searchURL,
-  getMovies,
-  Movie,
-  genres,
-  GENRE_URL,
-} from "@/pages/api/api";
+import { useRouter } from "next/router";
 
-const data = "";
+import { getMovies, BASE_URL, API_KEY, IMG_URL } from "@/pages/api/api";
 
 function Movies() {
-  return (
-    <MainContext.Provider value={""}>
-      <Header />
+  const router = useRouter();
+  const { id } = router.query;
+  const [movie, setMovie] = useState<any>("");
 
+  const handleMovieById = async () => {
+    const data: any = await getMovies(
+      `${BASE_URL}/movie/${id}?language=en-US&${API_KEY}`
+    );
+    setMovie(data);
+  };
+
+  useEffect(() => {
+    handleMovieById();
+  }, []);
+
+  return (
+    <>
+      {/*    <Header /> */}
+      <img src={`${IMG_URL + movie.poster_path}`} alt={movie.title} />
+      <div>{movie.original_title}</div>
       <Footer />
-    </MainContext.Provider>
+    </>
   );
 }
 
 export default Movies;
+
+/* import { createContext } from "react";
+
+export const GlobalContext = createContext;
+
+export const GlobalProvider = (props) => {
+  return (
+    <GlobalContext.Provider value={{ deger: "hehe" }}>
+      {props.children}
+    </GlobalContext.Provider>
+  );
+}; */
