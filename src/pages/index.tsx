@@ -1,7 +1,9 @@
 /* import Layout from "@/components/Layout"; */
-import { MainContext } from "./context.js"; // React Context Api Structure
+import { MainContext } from "@/components/context"; // React Context Api Structure
+
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import {
   API_URL,
@@ -85,7 +87,9 @@ const Home: React.FC = () => {
 
   // Pagination
   const increaseCount = () => {
-    setCount((prevCount) => prevCount + 1);
+    if (movies && movies.total_pages > count) {
+      setCount((prevCount) => prevCount + 1);
+    }
   };
 
   const decreaseCount = () => {
@@ -116,6 +120,10 @@ const Home: React.FC = () => {
     handleMovies,
     handleGenres,
     handleAnimations,
+    activeItem,
+    setActiveItem,
+    increaseCount,
+    decreaseCount,
   };
 
   return (
@@ -127,7 +135,11 @@ const Home: React.FC = () => {
           className="grid grid-cols-5 justify-center  w-[1000px] gap-3 m-4"
         >
           {movies?.results?.map((movie) => (
-            <div key={movie.id} className="movie ">
+            <Link
+              href={`/movie?id=${movie.id}`}
+              key={movie.id}
+              className="movie "
+            >
               <div className=" relative flex text-center justify-center cursor-pointer border rounded-sm border-gray-400  hover:border-green-400 ">
                 <img
                   src={`${IMG_URL + movie.poster_path}`}
@@ -146,18 +158,47 @@ const Home: React.FC = () => {
               {/*  <div className="overview h-6 overflow-hidden">
                 {movie.overview}
               </div> */}
-            </div>
+            </Link>
           ))}
         </div>
       </div>
       {movies && movies.total_pages > 1 && (
         <div className="flex justify-center gap-10 mb-4">
-          <button onClick={decreaseCount} value="prev">
-            Prev
+          {count > 1 && (
+            <button onClick={decreaseCount} value="prev">
+              Prev
+            </button>
+          )}
+          <button onClick={() => setCount(count - 1)}>
+            {count > 1 ? count - 1 : ""}
           </button>
-          <h3>{count}</h3>
+          <h3 className="text-green-500">{count}</h3>
+          <button onClick={() => setCount(count + 1)}>
+            {movies.total_pages - 1 > count && count + 1}
+          </button>
+          <button
+            onClick={() =>
+              setCount(movies.total_pages > 500 ? 500 : movies.total_pages)
+            }
+          >
+            {/* { if (count !== movies.total_pages) {
+              movies.total_pages > 500 ? 500 : movies.total_pages
+            } else {movies.total_pages} } */}
+
+            {(() => {
+              if (count !== movies.total_pages) {
+                return movies.total_pages > 500 ? 500 : movies.total_pages;
+              } else {
+                return "";
+              }
+            })()}
+
+            {/*  {movies.total_pages > 500 && 500}
+
+            {movies.total_pages && count !== movies.total_pages} */}
+          </button>
           <button onClick={increaseCount} value="next">
-            Next
+            {count === 500 ? "" : "Next"}
           </button>
         </div>
       )}
