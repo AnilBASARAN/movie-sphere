@@ -17,6 +17,9 @@ function Header() {
 
   return (
     <header className="flex justify-center gap-12 items-center h-16 sticky top-0 left-0 right-0 bg-slate-950 z-50 ">
+      <h1 className="text-2xl m-2 text-center bg-red-500 p-2">
+        Under Construction
+      </h1>
       <div className="flex justify-center  items-center">
         <div>
           <svg
