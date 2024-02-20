@@ -23,6 +23,9 @@ function Movies() {
   return (
     <>
       {/*    <Header /> */}
+      <h1 className="text-5xl m-10 text-center bg-red-500 p-8">
+        Under Construction
+      </h1>
       <img src={`${IMG_URL + movie.poster_path}`} alt={movie.title} />
       <div>{movie.original_title}</div>
       <Footer />
