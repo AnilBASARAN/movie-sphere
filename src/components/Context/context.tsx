@@ -1,4 +1,4 @@
-/* import { createContext, useContext } from "react";
+import { createContext, useContext } from "react";
 import { useState, useEffect } from "react";
 import {
   API_URL,
@@ -11,8 +11,8 @@ import {
 } from "@/pages/api/api";
 
 type ThemeContext = {
-  movies: Movie;
-  setMovies: React.Dispatch<React.SetStateAction<Movie>>;
+  movies: Movie | undefined;
+  setMovies: React.Dispatch<React.SetStateAction<Movie | undefined>>;
   searchTerm: string;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
   count: number;
@@ -117,7 +117,7 @@ export const MainProvider = ({ children }: any) => {
 
   // Pagination
   const increaseCount = () => {
-    if (movies.total_pages > count) {
+    if (movies && movies.total_pages > count) {
       setCount((prevCount) => prevCount + 1);
     }
   };
@@ -161,10 +161,4 @@ export const MainProvider = ({ children }: any) => {
       {children}
     </MainContext.Provider>
   );
-}; */
-
-import { createContext, useContext } from "react";
-
-const MainContext = createContext();
-
-export { MainContext, useContext };
+};
