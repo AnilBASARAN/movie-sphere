@@ -1,5 +1,5 @@
 import React from "react";
-import { MainContext } from "@/components/context";
+import { MainContext } from "@/components/Context/context";
 import { useContext } from "react";
 
 function Header() {
@@ -13,7 +13,7 @@ function Header() {
     refreshPage,
     handleGenres,
     handleAnimations,
-  } = useContext(MainContext);
+  } = useContext<any>(MainContext);
 
   return (
     <header className="flex justify-center gap-12 items-center h-16 sticky top-0 left-0 right-0 bg-slate-950 z-50 ">
