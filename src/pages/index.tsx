@@ -1,24 +1,47 @@
-import { MainContext } from "@/components/Context/context"; // React Context Api Structure
-import { useContext } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { API_URL, getMovies, IMG_URL } from "@/pages/api/api";
 
 const Home: React.FC = () => {
-  const { movies, count, setCount, IMG_URL, increaseCount, decreaseCount } =
-    useContext<any>(MainContext);
+  const [movies, setMovies] = useState<any>("");
+  const router = useRouter();
+  const { query }: any = router;
+  const [currentPage, setCurrentPage] = useState<number>(
+    query.page ? parseInt(query.page) : 1
+  );
+
+  // Pagination
+  const goToPage = (page: number) => {
+    setCurrentPage(page);
+    router.push(`/?&page=${page}`);
+  };
+
+  // Get All The Movies Method
+  const handleMovies = async (page: any) => {
+    const data = await getMovies(`${API_URL}&page=${page || 1}`);
+    setMovies(data);
+  };
+
+  // Get Pages From URL
+  useEffect(() => {
+    if (query.page) {
+      setCurrentPage(parseInt(query.page));
+    } else {
+      setCurrentPage(1);
+    }
+    handleMovies(parseInt(query.page));
+  }, [query.page]);
 
   return (
     <>
-      <div className="flex justify-center text-sm ">
+      <div className="flex justify-center text-sm  ">
         <div
           id="main"
           className="grid grid-cols-5 justify-center  w-[1000px] gap-3 m-4"
         >
-          {movies?.results?.map((movie) => (
-            <Link
-              href={`/movie?id=${movie.id}`}
-              key={movie.id}
-              className="movie "
-            >
+          {movies?.results?.map((movie: any) => (
+            <Link href={`/movie/${movie.id}`} key={movie.id} className="movie ">
               <div className=" relative flex text-center justify-center cursor-pointer border rounded-sm border-gray-400  hover:border-green-400 ">
                 <img
                   src={`${IMG_URL + movie.poster_path}`}
@@ -43,42 +66,11 @@ const Home: React.FC = () => {
       </div>
       {movies && movies.total_pages > 1 && (
         <div className="flex justify-center gap-10 mb-4">
-          {count > 1 && (
-            <button onClick={decreaseCount} value="prev">
-              Prev
-            </button>
+          {currentPage > 1 && (
+            <button onClick={() => goToPage(currentPage - 1)}>Previous</button>
           )}
-          <button onClick={() => setCount(count - 1)}>
-            {count > 1 ? count - 1 : ""}
-          </button>
-          <h3 className="text-green-500">{count}</h3>
-          <button onClick={() => setCount(count + 1)}>
-            {movies.total_pages - 1 > count && count + 1}
-          </button>
-          <button
-            onClick={() =>
-              setCount(movies.total_pages > 500 ? 500 : movies.total_pages)
-            }
-          >
-            {/* { if (count !== movies.total_pages) {
-              movies.total_pages > 500 ? 500 : movies.total_pages
-            } else {movies.total_pages} } */}
-
-            {(() => {
-              if (count !== movies.total_pages) {
-                return movies.total_pages > 500 ? 500 : movies.total_pages;
-              } else {
-                return "";
-              }
-            })()}
-
-            {/*  {movies.total_pages > 500 && 500}
-
-            {movies.total_pages && count !== movies.total_pages} */}
-          </button>
-          <button onClick={increaseCount} value="next">
-            {count === 500 ? "" : "Next"}
-          </button>
+          <span> {currentPage} </span>
+          <button onClick={() => goToPage(currentPage + 1)}>Next</button>
         </div>
       )}
     </>
