@@ -34,14 +34,11 @@ export const API_URL =
   BASE_URL + "/discover/movie?sort_by=popularity.desc&" + API_KEY;
 export const IMG_URL = "https://image.tmdb.org/t/p/w200";
 export const searchURL = BASE_URL + "/search/movie?" + API_KEY;
-export const animationURL = API_URL + "&with_genres=16";
+/* export const animationURL = API_URL + "&with_genres=16"; */
 export const GENRE_URL = API_URL + "&with_genres=";
-export const denemeURL = BASE_URL + "/discover/movie?" + API_KEY + "&page=1";
-export const getMovieById = BASE_URL + "/movie/";
+/* export const denemeURL = BASE_URL + "/discover/movie?" + API_KEY + "&page=1"; */
 
-(" ?language=en-US");
-
-console.log(denemeURL);
+/* (" ?language=en-US"); */
 
 export const genres = [
   {
