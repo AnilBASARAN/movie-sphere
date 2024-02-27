@@ -1,19 +1,26 @@
 import React from "react";
 import { MainContext } from "@/components/Context/context";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { genres } from "@/pages/api/api";
 
 function Header() {
-  const {
-    searchTerm,
-    setSearchTerm,
-    isOpen,
-    handleToggle,
-    handleSearch,
-    genres,
-    refreshPage,
-    handleGenres,
-    handleAnimations,
-  } = useContext<any>(MainContext);
+  const router = useRouter();
+  const { setActiveItem } = useContext<any>(MainContext);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  // Toggle Functionality
+  const [isOpen, setIsOpen] = useState(false);
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
+
+  // Search Functionality
+  const handleSearch = (e: any) => {
+    e.preventDefault();
+    router.push(`/search/${searchTerm}`);
+  };
 
   return (
     <header className="flex justify-center gap-12 items-center h-16 sticky top-0 left-0 right-0 bg-slate-950 z-50 ">
@@ -21,7 +28,7 @@ function Header() {
         Under Construction
       </h1>
       <div className="flex justify-center  items-center">
-        <div>
+        <Link href="/">
           <svg
             width="24"
             height="24"
@@ -36,26 +43,16 @@ function Header() {
               fill="currentColor"
             />
           </svg>
-        </div>
+        </Link>
         <div className="flex relative hover:bg-blue-950 h-16 w-32 ">
-          <button
-            onClick={refreshPage}
+          <Link
+            href="/"
             /* className={
             activeItem === "home" ? "text-yellow-400" : "text-white"
-          } */ className="text-center items-center w-full"
+          } */ className="flex justify-center text-center  items-center w-full"
           >
             All movies
-          </button>
-        </div>
-        <div className="flex relative hover:bg-blue-950 h-16 w-32 ">
-          <button
-            onClick={handleAnimations}
-            className={
-              /* activeItem === "animations" ? "text-yellow-400" : "text-white" */ "text-center items-center w-full "
-            }
-          >
-            Animations
-          </button>
+          </Link>
         </div>
         <div className="flex relative hover:bg-blue-950 h-16 w-24 ">
           <button
@@ -75,14 +72,18 @@ function Header() {
           >
             {isOpen &&
               genres.map((genre: any, index: any) => (
-                <button
-                  key={index}
-                  id={genre.name}
-                  className="text-left pl-2 border-l-[1px] hover:text-yellow-400 "
-                  onClick={() => handleGenres(genre)}
-                >
-                  {genre.name}
-                </button>
+                <Link href={`/genres/${genre.name}`}>
+                  <ul>
+                    <li
+                      key={index}
+                      id={genre.name}
+                      className="text-left pl-2 border-l-[1px] hover:text-yellow-400 "
+                      onClick={() => setActiveItem(genre.id)}
+                    >
+                      {genre.name}
+                    </li>
+                  </ul>
+                </Link>
               ))}
           </div>
         </div>
