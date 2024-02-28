@@ -62,8 +62,13 @@ const Search: React.FC = () => {
               </Link>
               <div className="flex flex-col justify-center m-4  ">
                 <div className=" ">
-                  <h3 className=" text-xl font-bold ">
-                    {movie.title}{" "}
+                  <h3 className=" text-xl font-bold  ">
+                    <Link
+                      href={`/movie/${movie.id}`}
+                      className="hover:text-green-400 "
+                    >
+                      {movie.title}{" "}
+                    </Link>
                     <span className="font-thin ml-2">
                       {movie.release_date.slice(0, 4)}
                     </span>{" "}
