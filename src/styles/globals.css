@@ -50,6 +50,14 @@ svg:hover {
   fill: rgb(255, 255, 255);
 }
 
-.vote {
+.vote-high {
+  @apply text-green-400 mt-5;
+}
+
+.vote-mid {
   @apply text-yellow-400 mt-5;
+}
+
+.vote-low {
+  @apply text-red-600 mt-5;
 }
