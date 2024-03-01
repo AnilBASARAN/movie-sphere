@@ -11,18 +11,20 @@ const Search: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(
     query.page ? parseInt(query.page) : 1
   );
-  const id = query.id;
   const [movies, setMovies] = useState<any>("");
+  console.log(movies);
 
   // Pagination
   const goToPage = (page: number) => {
     setCurrentPage(page);
-    router.push(`/search/${id}?&page=${page}`);
+    router.push(`/search/${query.id}?&page=${page}`);
   };
 
   // Get The Search Query Method
   const handleSearch = async (page: number) => {
-    const data = await getMovies(`${searchURL}&query=${id}&page=${page || 1}`);
+    const data = await getMovies(
+      `${searchURL}&query=${query.id}&page=${page || 1} `
+    );
     setMovies(data);
   };
 
@@ -69,17 +71,20 @@ const Search: React.FC = () => {
                     >
                       {movie.title}{" "}
                     </Link>
-                    <span className="font-thin ml-2">
+                    <span className="font-medium text-slate-400 ml-2  ">
                       {movie.release_date.slice(0, 4)}
                     </span>{" "}
                   </h3>
                 </div>
 
                 <div>
-                  <h3 className=" text-sm text-gray-300 ">
+                  <h3 className=" text-sm text-slate-400  ">
                     {movie.title !== movie.original_title && (
-                      <span className="mr-1">
-                        Original Title: {movie.original_title}{" "}
+                      <span className="mr-1 text-slate-400">
+                        Original Title:{" "}
+                        <span className="font-serif text-slate-400 text-sm ml-1 ">
+                          '{movie.original_title}'{" "}
+                        </span>
                       </span>
                     )}
 
@@ -97,7 +102,7 @@ const Search: React.FC = () => {
                   </h3>
                 </div>
 
-                <div className="mt-2 text-gray-300  ">
+                <div className="mt-2 text-slate-400   ">
                   <ToggleText key={movie.id} text={movie.overview} />
                 </div>
               </div>
