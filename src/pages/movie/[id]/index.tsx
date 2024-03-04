@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import ReactPlayer from "react-player";
 
@@ -13,10 +13,19 @@ const Movies: React.FC = () => {
   const [isOkay, setIsOkay] = useState<any>(false);
   const [isCredits, setIsCredits] = useState<boolean>(true);
   const [showMore, setShowMore] = useState(false);
+  /*  const { activeItem, setActiveItem } = useContext<any>(); */
+
+  console.log(movies);
 
   const toggleMore = () => {
     setShowMore(!showMore);
   };
+
+  const director = movies.credits?.crew.filter(
+    ({ job }: any) => job === "Director"
+  );
+
+  console.log(director);
 
   /*   console.log(movies); */
 
@@ -81,7 +90,11 @@ const Movies: React.FC = () => {
             <div className="w-56  ">
               {" "}
               <img
-                src={`${IMG_URL + movies.poster_path}`}
+                src={`${
+                  movies.poster_path
+                    ? IMG_URL + movies.poster_path
+                    : "/noimage.jpg"
+                }`}
                 alt={movies.title}
                 className=" border-2 border-slate-800 w-full rounded-sm   "
               />
@@ -223,7 +236,17 @@ const Movies: React.FC = () => {
                 {movies.release_date?.slice(0, 4)}
               </h1>{" "}
               <h1 className="text-slate-400">Directed by:</h1>{" "}
-              <h1 className="underline text-slate-200">James Cameron</h1>{" "}
+              {director && (
+                <Link
+                  onClick={() => setActiveItem(director[0]?.id)}
+                  href={`/search/person/${director[0]?.id}`}
+                  key={director[0]?.id}
+                >
+                  <h1 className="underline hover:text-green-400 text-slate-200">
+                    {director[0]?.name}{" "}
+                  </h1>
+                </Link>
+              )}
             </div>
             <div className="text-slate-400 mt-4 ">
               <h1>{movies.tagline}</h1>
@@ -231,11 +254,12 @@ const Movies: React.FC = () => {
             <div className="text-slate-400 mt-4 text-sm">
               <p>{movies.overview}</p>
             </div>
-            <div className="mt-4 flex gap-1">
+            <div className="mt-4 flex gap-2">
               {movies.genres?.map((genre: any) => (
                 <Link
                   href={`/genres/${genre.name}`}
                   className="bg-slate-800 px-2 py-1 rounded-md text-slate-400 hover:text-slate-100"
+                  key={genre.name}
                 >
                   {genre.name}{" "}
                 </Link>
@@ -263,10 +287,7 @@ const Movies: React.FC = () => {
             <div className={`m-1 ${showMore ? "text" : "line-clamp-7"}`}>
               {isCredits &&
                 movies.credits?.cast.map((member: any) => (
-                  <Link
-                    href={`/search/person/${member.name}`}
-                    key={member.name}
-                  >
+                  <Link href={`/search/person/${member.id}`} key={member.name}>
                     <h1 className="inline-block text-sm m-1 bg-slate-800 px-2 py-1 rounded-md text-slate-400 hover:text-slate-100">
                       {member.name}{" "}
                     </h1>
@@ -279,12 +300,14 @@ const Movies: React.FC = () => {
                   </h1>
                 ))}
             </div>
-            <button
-              className="w-40 underline self-center text-sm bg-slate-800 px-2 py-1 rounded-md text-slate-400 hover:text-slate-100"
-              onClick={toggleMore}
-            >
-              {showMore ? "Show Less" : "Show More"}
-            </button>
+            {movies.credits?.cast.length > 30 && (
+              <button
+                className="w-40 underline self-center text-sm bg-slate-800 px-2 py-1 rounded-md text-slate-400 hover:text-slate-100"
+                onClick={toggleMore}
+              >
+                {showMore ? "Show Less" : "Show More"}
+              </button>
+            )}
           </div>
           {/*
            
