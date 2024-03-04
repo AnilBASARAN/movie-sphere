@@ -45,7 +45,11 @@ const Home: React.FC = () => {
             <Link href={`/movie/${movie.id}`} key={movie.id} className="movie ">
               <div className=" relative flex text-center justify-center cursor-pointer border rounded-sm border-gray-400  hover:border-green-400 ">
                 <img
-                  src={`${IMG_URL + movie.poster_path}`}
+                  src={`${
+                    movie.poster_path
+                      ? IMG_URL + movie.poster_path
+                      : "/noimage.jpg"
+                  }`}
                   alt={movie.title}
                   className=" "
                 />
