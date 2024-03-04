@@ -238,7 +238,7 @@ const Movies: React.FC = () => {
               <h1 className="text-slate-400">Directed by:</h1>{" "}
               {director && (
                 <Link
-                  onClick={() => setActiveItem(director[0]?.id)}
+                  /*  onClick={() => setActiveItem(director[0]?.id)} */
                   href={`/search/person/${director[0]?.id}`}
                   key={director[0]?.id}
                 >
