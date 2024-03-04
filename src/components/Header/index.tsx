@@ -72,7 +72,7 @@ function Header() {
               >
                 {isOpen &&
                   genres.map((genre: any, index: any) => (
-                    <Link href={`/genres/${genre.name}`}>
+                    <Link key={index} href={`/genres/${genre.name}`}>
                       <ul>
                         <li
                           key={index}
