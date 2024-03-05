@@ -295,7 +295,10 @@ const Movies: React.FC = () => {
                 ))}
               {!isCredits &&
                 movies.credits?.crew.map((member: any) => (
-                  <h1 className="inline-block text-sm m-1 bg-slate-800 px-2 py-1 rounded-md text-slate-400 hover:text-slate-100">
+                  <h1
+                    key={member.name}
+                    className="inline-block text-sm m-1 bg-slate-800 px-2 py-1 rounded-md text-slate-400 hover:text-slate-100"
+                  >
                     {member.name}{" "}
                   </h1>
                 ))}
