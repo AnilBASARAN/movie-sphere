@@ -10,7 +10,7 @@ const Movies: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;
   const [movies, setMovies] = useState<any>("");
-  const [/* isOkay, */ setIsOkay] = useState<any>(false);
+  const [isOkay, setIsOkay] = useState<any>(false);
   const [isCredits, setIsCredits] = useState<boolean>(true);
   const [showMore, setShowMore] = useState(false);
   /*  const { activeItem, setActiveItem } = useContext<any>(); */
