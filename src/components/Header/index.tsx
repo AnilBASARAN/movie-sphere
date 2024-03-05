@@ -16,6 +16,12 @@ function Header() {
     setIsOpen(!isOpen);
   };
 
+  // Login toggle
+  const [is, setIs] = useState(false);
+  const handle = () => {
+    setIs(!is);
+  };
+
   // Search Functionality
   const handleSearch = (e: any) => {
     e.preventDefault();
@@ -29,7 +35,7 @@ function Header() {
       </h1> */}
       <div className="flex justify-center gap-8 items-center w-[1000px]">
         <div className="flex justify-center w-full   items-center">
-          <Link key="2" className="m-[2px]" href="/">
+          <Link key="2" className=" mr-4" href="/">
             <svg
               width="180"
               height="28"
@@ -104,8 +110,17 @@ function Header() {
             />
           </form>
         </div>
-        <div>
-          <button>Login</button>
+        <div className="flex relative ">
+          <button className="" onMouseEnter={handle} onMouseLeave={handle}>
+            Login
+          </button>
+          <div
+            className={is ? "absolute top-full mt-6 bg-slate-900 p-2 " : ""}
+            onMouseLeave={handle}
+          >
+            {" "}
+            {is && "Coming Soon"}{" "}
+          </div>
         </div>
       </div>
     </header>

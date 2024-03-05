@@ -41,7 +41,7 @@ const Genres: React.FC = () => {
 
   return (
     <>
-      <div className="flex justify-center text-sm ">
+      <div className="flex justify-center text-sm min-h-[76.9vh] ">
         <div
           id="main"
           className="grid grid-cols-5 justify-center  w-[1000px] gap-3 m-4"
