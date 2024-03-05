@@ -42,7 +42,7 @@ const Search: React.FC = () => {
 
   return (
     <>
-      <div className="flex  items-center justify-center text-sm min-h-[76.9vh] ">
+      <div className="flex  items-center justify-center text-sm min-h-[78vh] ">
         <div id="main" className="block w-[1000px] m-4 ">
           <div className="text-center border-b border-gray-800 pb-4 ">
             <h1 className="text-gray-300">

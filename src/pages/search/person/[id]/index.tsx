@@ -25,7 +25,7 @@ const Search: React.FC = () => {
   }, [query]);
 
   return (
-    <div className="flex justify-center  min-h-[76.9vh]  ">
+    <div className="flex justify-center  min-h-[78vh]  ">
       {details && (
         <div className="flex items-start justify-center w-[1000px] p-2 gap-6 ">
           <div>

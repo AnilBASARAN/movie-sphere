@@ -58,7 +58,7 @@ const Movies: React.FC = () => {
   }, [id]);
 
   return (
-    <div className="flex justify-center min-h-[76.9vh]  ">
+    <div className="flex justify-center min-h-[78vh]  ">
       <div className=" w-[1000px] m-4 ">
         <div className="mb-4">
           <div>
