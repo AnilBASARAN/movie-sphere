@@ -29,7 +29,7 @@ function Header() {
       </h1> */}
       <div className="flex justify-center gap-8 items-center w-[1000px]">
         <div className="flex justify-center w-full   items-center">
-          <Link className="m-[2px]" href="/">
+          <Link key="2" className="m-[2px]" href="/">
             <svg
               width="180"
               height="28"
@@ -46,6 +46,7 @@ function Header() {
           <div className="flex flex-1 ">
             <div className="flex  relative hover:bg-blue-950 h-16 w-32 ">
               <Link
+                key="1"
                 href="/"
                 /* className={
             activeItem === "home" ? "text-yellow-400" : "text-white"

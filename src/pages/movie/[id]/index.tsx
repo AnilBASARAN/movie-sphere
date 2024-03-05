@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
-import ReactPlayer from "react-player";
+/* import ReactPlayer from "react-player"; */
 
 import { getMovies, BASE_URL, API_KEY, IMG_URL } from "@/pages/api/api";
-import Image from "next/image";
+/* import Image from "next/image"; */
 import Link from "next/link";
 
 const Movies: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;
   const [movies, setMovies] = useState<any>("");
-  const [isOkay, setIsOkay] = useState<any>(false);
+  const [/* isOkay, */ setIsOkay] = useState<any>(false);
   const [isCredits, setIsCredits] = useState<boolean>(true);
   const [showMore, setShowMore] = useState(false);
   /*  const { activeItem, setActiveItem } = useContext<any>(); */
