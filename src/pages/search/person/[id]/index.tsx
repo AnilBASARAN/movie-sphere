@@ -32,7 +32,11 @@ const Search: React.FC = () => {
             <div className="w-56">
               {" "}
               <img
-                src={`${IMG_URL + details.profile_path}`}
+                src={`${
+                  details.profile_path
+                    ? IMG_URL + details.profile_path
+                    : "/noimage.jpg"
+                }`}
                 alt={details.name}
                 className=" border-2 border-slate-800 w-full rounded-sm   "
               />
