@@ -84,7 +84,7 @@ function Header() {
                         <li
                           key={index}
                           id={genre.name}
-                          className="text-left pl-2 border-l-[1px] hover:text-yellow-400 "
+                          className="text-left pl-2 border-l-[1px] hover:text-green-400 "
                           onClick={() => setActiveItem(genre.id)}
                         >
                           {genre.name}
