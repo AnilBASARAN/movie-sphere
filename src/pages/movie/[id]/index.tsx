@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
-/* import ReactPlayer from "react-player"; */
+import ReactPlayer from "react-player";
 
 import { getMovies, BASE_URL, API_KEY, IMG_URL } from "@/pages/api/api";
+import Ratings from "@/components/Rating";
 /* import Image from "next/image"; */
 import Link from "next/link";
+/* import { Rate } from "antd"; */
+import TransparentImage from "@/components/TransparentImage";
 
 const Movies: React.FC = () => {
   const router = useRouter();
@@ -25,12 +28,12 @@ const Movies: React.FC = () => {
     ({ job }: any) => job === "Director"
   );
 
-  console.log(director);
-
-  /*   console.log(movies); */
+  const trailer = movies.videos?.results.filter(
+    ({ type }: any) => type === "Trailer"
+  );
 
   // Get Numbers With One Decimal
-  function getNumbersWithOneDecimal(value: string) {
+  const getNumbersWithOneDecimal = (value: string) => {
     // Match numbers with up to one decimal place
     const regex = /^\d*\.?\d{0,1}/;
     const match = value?.match(regex);
@@ -39,12 +42,12 @@ const Movies: React.FC = () => {
     } else {
       return null;
     }
-  }
+  };
 
   // Get Movies By Id
   const handleMovieById = async () => {
     const data = await getMovies(
-      `${BASE_URL}/movie/${id}?&append_to_response=credits&language=en-US&${API_KEY}`
+      `${BASE_URL}/movie/${id}?&append_to_response=credits,videos&language=en-US&${API_KEY}`
     );
     setMovies(data);
   };
@@ -54,35 +57,48 @@ const Movies: React.FC = () => {
     if (id) {
       handleMovieById();
     }
-    setIsOkay(true);
+    setTimeout(() => {
+      setIsOkay(true);
+    }, 1000);
   }, [id]);
 
   return (
     <div className="flex justify-center min-h-[78vh]  ">
-      <div className=" w-[1000px] m-4 ">
-        <div className="mb-4">
-          <div>
-            <img
-              src={`${
-                "https://image.tmdb.org/t/p/w1280" + movies.backdrop_path
-              }`}
-              alt={movies.title}
-              className=" "
-            />
-          </div>
-
-          {/*  {isOkay && (
-            <div>
+      <div className=" w-[1000px] m-4  ">
+        <div className="mb-4 pointer-events-none   ">
+          {movies?.videos?.results.length > 0 ? (
+            <div className=" relative pt-[56.25%]">
               <ReactPlayer
-                url={`https://www.youtube.com/watch?v=${
-                  movies.videos?.results[movies.videos?.results.length - 1].key
-                }`}
-                controls
+                className="absolute top-0 left-0 border-2 border-primary  "
+                url={`https://www.youtube.com/watch?v=${trailer[0]?.key}`}
+                controls={false}
+                loop={true}
+                playing={true}
+                volume={0}
                 width="100%"
-                height="auto"
+                height="100%"
+                playbackRate={0.8}
               />{" "}
+              <div className="absolute top-0 left-0 transition">
+                <TransparentImage
+                  alt={movies.title}
+                  imagePath={`${
+                    "https://image.tmdb.org/t/p/w1280" + movies.backdrop_path
+                  }`}
+                />
+              </div>
             </div>
-          )} */}
+          ) : (
+            <div>
+              <img
+                src={`${
+                  "https://image.tmdb.org/t/p/w1280" + movies.backdrop_path
+                }`}
+                alt={movies.title}
+                className="border-2 border-primary"
+              />
+            </div>
+          )}
         </div>
         <div className="flex gap-6  ">
           <div className="flex flex-col  items-baseline ">
@@ -100,10 +116,10 @@ const Movies: React.FC = () => {
               />
             </div>
             <div className="bg-slate-800 w-full relative  p-2 my-2 rounded-sm flex text-center justify-center items-center cursor-pointer">
-              <div className="absolute w-full h-full flex items-center justify-center text-center align-middle opacity-0 bg-slate-950/[.0] transition hover:bg-slate-900/70 hover:opacity-100">
+              {/*  <div className="absolute w-full h-full flex items-center justify-center text-center align-middle opacity-0 bg-slate-950/[.0] transition hover:bg-slate-900/70 hover:opacity-100">
                 <h1 className=" text-slate-200 ">Login to rate</h1>
               </div>
-              <div className="flex justify-around ">
+               <div className="flex justify-around ">
                 {" "}
                 <svg
                   clipRule="evenodd"
@@ -180,7 +196,16 @@ const Movies: React.FC = () => {
                     fillRule="nonzero"
                   />
                 </svg>
-              </div>
+              </div> */}
+              {/* <Rate
+                style={{
+                  color: "yellow",
+                  boxShadow: "10px 10px;",
+                  fontSize: "200%",
+                }}
+                allowHalf
+              /> */}
+              <Ratings />
             </div>
             <div className=" flex flex-col gap-2 text-slate-400 text-sm w-full ">
               <div className="flex justify-between border-b border-slate-800">
