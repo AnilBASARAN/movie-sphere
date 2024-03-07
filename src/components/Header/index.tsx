@@ -33,9 +33,9 @@ function Header() {
       {/*  <h1 className="text-2xl m-2 text-center bg-red-500 p-2">
         Under Construction
       </h1> */}
-      <div className="flex justify-center gap-8 items-center w-[1000px]">
-        <div className="flex justify-center w-full   items-center">
-          <Link key="2" className=" mr-4" href="/">
+      <div className="flex justify-center m-4  gap-8 items-center w-[1000px]">
+        <div className="flex justify-center w-full  items-center">
+          <Link key="2" className=" mr-4 " href="/">
             <svg
               width="180"
               height="28"
