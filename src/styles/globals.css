@@ -41,12 +41,12 @@ a {
   text-decoration: none;
 }
 
-svg {
+.footer-svg {
   fill: rgb(203, 213, 225);
   cursor: pointer;
   transition: ease 0.1s;
 }
-svg:hover {
+.footer-svg:hover {
   fill: rgb(255, 255, 255);
 }
 
@@ -62,6 +62,6 @@ svg:hover {
   @apply text-red-600 mt-5;
 }
 
-.star-svg {
+/* .star-svg {
   fill: rgb(12, 17, 27);
-}
+} */
