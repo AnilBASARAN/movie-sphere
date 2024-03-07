@@ -13,7 +13,7 @@ const Movies: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;
   const [movies, setMovies] = useState<any>("");
-  const [isOkay, setIsOkay] = useState<any>(false);
+  /*   const [isOkay, setIsOkay] = useState<any>(false); */
   const [isCredits, setIsCredits] = useState<boolean>(true);
   const [showMore, setShowMore] = useState(false);
   /*  const { activeItem, setActiveItem } = useContext<any>(); */
@@ -57,16 +57,13 @@ const Movies: React.FC = () => {
     if (id) {
       handleMovieById();
     }
-    setTimeout(() => {
-      setIsOkay(true);
-    }, 1000);
   }, [id]);
 
   return (
     <div className="flex justify-center min-h-[78vh]  ">
       <div className=" w-[1000px] m-4  ">
         <div className="mb-4 pointer-events-none   ">
-          {movies?.videos?.results.length > 0 ? (
+          {trailer && trailer[0] ? (
             <div className=" relative pt-[56.25%]">
               <ReactPlayer
                 className="absolute top-0 left-0 border-2 border-primary  "
