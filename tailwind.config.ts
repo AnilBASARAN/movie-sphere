@@ -17,6 +17,9 @@ const config: Config = {
         7: "7",
         8: "8",
       },
+      colors: {
+        primary: "rgb(12, 17, 27)",
+      },
     },
   },
   plugins: [],
