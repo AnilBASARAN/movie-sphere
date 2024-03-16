@@ -24,6 +24,16 @@ const Movies: React.FC = () => {
     setShowMore(!showMore);
   };
 
+  const handleCrew = () => {
+    setShowMore(false);
+    setIsCredits(false);
+  };
+
+  const handleCast = () => {
+    setShowMore(false);
+    setIsCredits(true);
+  };
+
   const director = movies.credits?.crew.filter(
     ({ job }: any) => job === "Director"
   );
@@ -293,7 +303,7 @@ const Movies: React.FC = () => {
                 className={`hover:text-green-300 ${
                   isCredits ? "text-green-400" : "text-slate-300"
                 }`}
-                onClick={() => setIsCredits(true)}
+                onClick={handleCast}
               >
                 Cast
               </button>{" "}
@@ -301,29 +311,36 @@ const Movies: React.FC = () => {
                 className={`hover:text-green-300 ${
                   !isCredits ? "text-green-400" : "text-slate-300"
                 }`}
-                onClick={() => setIsCredits(false)}
+                onClick={handleCrew}
               >
                 Crew
               </button>{" "}
             </div>
-            <div className={`m-1 ${showMore ? "text" : "line-clamp-7"}`}>
+            <div className="m-1">
               {isCredits &&
-                movies.credits?.cast.map((member: any) => (
-                  <Link href={`/search/person/${member.id}`} key={member.name}>
-                    <h1 className="inline-block text-sm m-1 bg-slate-800 px-2 py-1 rounded-md text-slate-400 hover:text-slate-100">
+                movies.credits?.cast
+                  .slice(0, showMore ? undefined : 35)
+                  .map((member: any) => (
+                    <Link
+                      href={`/search/person/${member.id}`}
+                      key={member.name}
+                    >
+                      <h1 className="inline-block text-sm m-1 bg-slate-800 px-2 py-1 rounded-md text-slate-400 hover:text-slate-100">
+                        {member.name}{" "}
+                      </h1>
+                    </Link>
+                  ))}
+              {!isCredits &&
+                movies.credits?.crew
+                  .slice(0, showMore ? undefined : 35)
+                  .map((member: any) => (
+                    <h1
+                      key={member.name}
+                      className="inline-block text-sm m-1 bg-slate-800 px-2 py-1 rounded-md text-slate-400 hover:text-slate-100"
+                    >
                       {member.name}{" "}
                     </h1>
-                  </Link>
-                ))}
-              {!isCredits &&
-                movies.credits?.crew.map((member: any) => (
-                  <h1
-                    key={member.name}
-                    className="inline-block text-sm m-1 bg-slate-800 px-2 py-1 rounded-md text-slate-400 hover:text-slate-100"
-                  >
-                    {member.name}{" "}
-                  </h1>
-                ))}
+                  ))}
             </div>
             {movies.credits?.cast.length > 30 && (
               <button
