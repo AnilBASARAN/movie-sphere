@@ -50,9 +50,17 @@ const Search: React.FC = () => {
               </h1>
             </div>
           </div>
-          {details.known_for_department === "Directing" && (
-            <div className="grid grid-cols-5 items-start mx-2  gap-3 ">
-              {details?.movie_credits?.crew?.map((movie: any) => (
+          <div className="grid grid-cols-5 items-start mx-2  gap-3 ">
+            {(details?.movie_credits?.cast || [])
+              .concat(details?.movie_credits?.crew || [])
+              .reduce((uniqueMovies: any[], movie: any) => {
+                // Check if the movie already exists in the uniqueMovies array
+                if (!uniqueMovies.some((m) => m.id === movie.id)) {
+                  uniqueMovies.push(movie); // If not, add it to the uniqueMovies array
+                }
+                return uniqueMovies;
+              }, [])
+              .map((movie: any) => (
                 <Link href={`/movie/${movie.id}`} key={movie.id}>
                   <div className=" relative flex text-center  justify-center  cursor-pointer border rounded-sm border-gray-400  hover:border-green-400 ">
                     <img
@@ -69,29 +77,7 @@ const Search: React.FC = () => {
                   </div>
                 </Link>
               ))}
-            </div>
-          )}
-          {details.known_for_department === "Acting" && (
-            <div className="grid grid-cols-5 items-start mx-2  gap-3 ">
-              {details?.movie_credits?.cast?.map((movie: any) => (
-                <Link href={`/movie/${movie.id}`} key={movie.id}>
-                  <div className=" relative flex text-center  justify-center  cursor-pointer border rounded-sm border-gray-400  hover:border-green-400 ">
-                    <img
-                      src={`${
-                        movie.poster_path
-                          ? IMG_URL + movie.poster_path
-                          : "/noimage.jpg"
-                      }`}
-                      alt={movie.title}
-                    />
-                    <div className="absolute w-full h-full flex font-bold items-center justify-center opacity-0 bg-slate-950/[.0] transition  hover:bg-slate-950/70 hover:opacity-100  ">
-                      <h3 className="">{movie.title}</h3>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
+          </div>
         </div>
       )}
     </div>
