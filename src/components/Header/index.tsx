@@ -1,14 +1,42 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { MainContext } from "@/components/Context/context";
 import { useContext, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { genres } from "@/pages/api/api";
+import Register from "@/components/Register";
+import Login from "@/components/Login";
+import { auth } from "@/config/firebase";
+import { signOut } from "firebase/auth";
 
 function Header() {
   const router = useRouter();
   const { setActiveItem } = useContext<any>(MainContext);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [isRegisterVisible, setIsRegisterVisible] = useState<boolean>(false);
+  const [isLoginVisible, setIsLoginVisible] = useState<boolean>(false);
+  const [currentUser, setCurrentUser] = useState<any>(null);
+
+  // SignInForm Visibility
+  const handleCloseSignInForm = () => {
+    setIsRegisterVisible(false);
+    document.body.style.overflow = "auto";
+  };
+  const handleOpenSignInForm = () => {
+    setIsRegisterVisible(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  // Login Form Visibility
+  const handleOpenLoginForm = () => {
+    setIsLoginVisible(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const handleCloseLoginForm = () => {
+    setIsLoginVisible(false);
+    document.body.style.overflow = "auto";
+  };
 
   // Toggle Functionality
   const [isOpen, setIsOpen] = useState(false);
@@ -16,10 +44,21 @@ function Header() {
     setIsOpen(!isOpen);
   };
 
-  // Login toggle
-  const [is, setIs] = useState(false);
-  const handle = () => {
-    setIs(!is);
+  // Toggle Profile
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const handleProfileToggle = () => {
+    setIsProfileOpen(!isProfileOpen);
+  };
+
+  // Sign Out Functionality
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      /*   setIsUserLoggedIn(false); */
+      window.location.href = router.asPath; // Redirect the page when user logs out
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // Search Functionality
@@ -27,6 +66,14 @@ function Header() {
     e.preventDefault();
     router.push(`/search/movie/${searchTerm}`);
   };
+
+  // Listen for changes in authentication state
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setCurrentUser(user); // Update currentUser state when authentication state changes
+    });
+    return () => unsubscribe();
+  }, []);
 
   return (
     <header className="flex justify-center  items-center h-16 sticky top-0 left-0 right-0 bg-slate-950 z-50  ">
@@ -50,17 +97,17 @@ function Header() {
             </svg>
           </Link>
           <div className="flex flex-1 ">
-            <div className="flex  relative hover:bg-blue-950 h-16 w-32 ">
+            {/* <div className="flex  relative hover:bg-blue-950 h-16 w-32 ">
               <Link
                 key="1"
                 href="/"
-                /* className={
+                className={
             activeItem === "home" ? "text-yellow-400" : "text-white"
-          } */ className="flex justify-center text-center  items-center w-full"
+          } className="flex justify-center text-center  items-center w-full"
               >
                 All movies
               </Link>
-            </div>
+            </div> */}
             <div className="flex relative hover:bg-blue-950 h-16 w-24 ">
               <button
                 onMouseEnter={handleToggle}
@@ -110,17 +157,82 @@ function Header() {
             />
           </form>
         </div>
-        <div className="flex relative ">
-          <button className="" onMouseEnter={handle} onMouseLeave={handle}>
-            Login
-          </button>
-          <div
-            className={is ? "absolute top-full mt-6 bg-slate-900 p-2 " : ""}
-            onMouseLeave={handle}
-          >
-            {" "}
-            {is && "Coming Soon"}{" "}
-          </div>
+        <div className="flex relative  ">
+          {isRegisterVisible && (
+            <Register handleCloseSignInForm={handleCloseSignInForm} />
+          )}
+          {/* {isRegisterVisible && (
+            <Register
+              handleCloseRegister={handleCloseRegister}
+              isTrue={isTrue}
+            />
+          )}{" "} */}
+          {isLoginVisible && (
+            <Login handleCloseLoginForm={handleCloseLoginForm} />
+          )}
+
+          {currentUser ? (
+            <div className="flex relative justify-center items-center  px-2 hover:bg-white hover:text-black hover:border-black h-10  rounded-tl-sm rounded-tr-sm  ">
+              <button
+                onMouseEnter={handleProfileToggle}
+                onMouseLeave={handleProfileToggle}
+                className=" h-16 min-w-24 max-w-36 font-bold truncate "
+              >
+                {auth?.currentUser?.email}
+              </button>
+              <div
+                className={
+                  isProfileOpen
+                    ? "absolute top-full w-full  bg-white   rounded-bl-sm rounded-br-sm  "
+                    : ""
+                }
+                onMouseLeave={handleProfileToggle}
+              >
+                {isProfileOpen && (
+                  <div
+                    className="  bg-white rounded-md overflow-hidden shadow-xl "
+                    onMouseEnter={() => setIsProfileOpen(true)}
+                    onMouseLeave={() => setIsProfileOpen(false)}
+                  >
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    >
+                      Settings
+                    </a>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    >
+                      User
+                    </a>
+                    <a
+                      onClick={logout}
+                      href="/"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    >
+                      Sign Out
+                    </a>
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div className="flex justify-center items-center gap-6">
+              <button
+                onClick={handleOpenLoginForm}
+                className="hover:text-green-400"
+              >
+                Login
+              </button>
+              <button
+                onClick={handleOpenSignInForm}
+                className="hover:text-green-400"
+              >
+                Register
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </header>
