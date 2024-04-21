@@ -50,7 +50,7 @@ const Search: React.FC = () => {
               </h1>
             </div>
           </div>
-          <div className="grid grid-cols-5 items-start mx-2  gap-3 ">
+          <div className="grid grid-cols-5 justify-center mx-2  gap-3 ">
             {(details?.movie_credits?.cast || [])
               .concat(details?.movie_credits?.crew || [])
               .reduce((uniqueMovies: any[], movie: any) => {
@@ -62,7 +62,7 @@ const Search: React.FC = () => {
               }, [])
               .map((movie: any) => (
                 <Link href={`/movie/${movie.id}`} key={movie.id}>
-                  <div className=" relative flex text-center  justify-center  cursor-pointer border rounded-sm border-gray-400  hover:border-green-400 ">
+                  <div className=" relative flex text-center  justify-center  cursor-pointer border rounded-sm border-gray-400  h-full hover:border-green-400 ">
                     <img
                       src={`${
                         movie.poster_path

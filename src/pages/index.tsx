@@ -42,8 +42,12 @@ const Home: React.FC = () => {
           className="grid grid-cols-5 justify-center  w-[1000px] gap-3 m-4"
         >
           {movies?.results?.map((movie: any) => (
-            <Link href={`/movie/${movie.id}`} key={movie.id} className="movie ">
-              <div className=" relative flex text-center justify-center cursor-pointer border rounded-sm border-gray-400  hover:border-green-400 ">
+            <Link
+              href={`/movie/${movie.id}`}
+              key={movie.id}
+              className="movie  "
+            >
+              <div className=" relative flex text-center justify-center cursor-pointer border rounded-sm border-gray-400 h-full hover:border-green-400 ">
                 <img
                   src={`${
                     movie.poster_path
@@ -51,7 +55,7 @@ const Home: React.FC = () => {
                       : "/noimage.jpg"
                   }`}
                   alt={movie.title}
-                  className=" "
+                  className="  "
                 />
                 <div className="absolute w-full h-full flex font-bold items-center justify-center opacity-0 bg-slate-950/[.0] transition hover:bg-slate-950/70 hover:opacity-100  ">
                   <h3 className="">{movie.title}</h3>

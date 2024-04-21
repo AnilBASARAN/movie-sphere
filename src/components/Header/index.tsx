@@ -40,15 +40,15 @@ function Header() {
 
   // Toggle Functionality
   const [isOpen, setIsOpen] = useState(false);
-  const handleToggle = () => {
+  /* const handleToggle = () => {
     setIsOpen(!isOpen);
-  };
+  }; */
 
   // Toggle Profile
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const handleProfileToggle = () => {
+  /*   const handleProfileToggle = () => {
     setIsProfileOpen(!isProfileOpen);
-  };
+  }; */
 
   // Sign Out Functionality
   const logout = async () => {
@@ -103,35 +103,29 @@ function Header() {
                 href="/"
                 className={
             activeItem === "home" ? "text-yellow-400" : "text-white"
-          } className="flex justify-center text-center  items-center w-full"
+            } className="flex justify-center text-center  items-center w-full"
               >
                 All movies
               </Link>
             </div> */}
-            <div className="flex relative hover:bg-blue-950 h-16 w-24 ">
-              <button
-                onMouseEnter={handleToggle}
-                onMouseLeave={handleToggle}
-                className=" text-center items-center w-full ease-out "
-              >
+            <div
+              className="flex relative hover:bg-sky-950 h-16 w-32   "
+              onMouseEnter={() => setIsOpen(true)}
+              onMouseLeave={() => setIsOpen(false)}
+            >
+              <button className=" text-center items-center w-full  ">
                 Genres
               </button>
-              <div
-                className={
-                  isOpen
-                    ? "absolute top-full -left-[150px] bg-blue-950 p-3  rounded-bl-sm rounded-br-sm grid grid-cols-3 w-[420px] "
-                    : ""
-                }
-                onMouseLeave={handleToggle}
-              >
-                {isOpen &&
-                  genres.map((genre: any, index: any) => (
+
+              {isOpen && (
+                <div className="absolute flex flex-col   left-1/2 top-16 -translate-x-1/2 bg-sky-950 text-gray-200  w-full text-sm font-semibold border-t-[1px] border-gray-600  ">
+                  {genres.map((genre: any, index: any) => (
                     <Link key={index} href={`/genres/${genre.name}`}>
                       <ul>
                         <li
                           key={index}
                           id={genre.name}
-                          className="text-left pl-2 border-l-[1px] hover:text-green-400 "
+                          className="text-left p-1 px-2 border-b-[1px] border-gray-600 hover:text-green-400 hover:bg-blue-950  "
                           onClick={() => setActiveItem(genre.id)}
                         >
                           {genre.name}
@@ -139,7 +133,8 @@ function Header() {
                       </ul>
                     </Link>
                   ))}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -172,10 +167,10 @@ function Header() {
           )}
 
           {currentUser ? (
-            <div className="flex relative justify-center items-center  px-2 hover:bg-white hover:text-black hover:border-black h-10  rounded-tl-sm rounded-tr-sm  ">
+            <div className="flex relative justify-center items-center  px-2 hover:bg-sky-950  hover:border-black h-10  rounded-tl-sm rounded-tr-sm  ">
               <button
-                onMouseEnter={handleProfileToggle}
-                onMouseLeave={handleProfileToggle}
+                onMouseEnter={() => setIsProfileOpen(true)}
+                onMouseLeave={() => setIsProfileOpen(false)}
                 className=" h-16 min-w-24 max-w-36 font-bold truncate "
               >
                 {auth?.currentUser?.email}
@@ -183,33 +178,32 @@ function Header() {
               <div
                 className={
                   isProfileOpen
-                    ? "absolute top-full w-full  bg-white   rounded-bl-sm rounded-br-sm  "
+                    ? "absolute top-full w-full  bg-sky-950    "
                     : ""
                 }
-                onMouseLeave={handleProfileToggle}
               >
                 {isProfileOpen && (
                   <div
-                    className="  bg-white rounded-md overflow-hidden shadow-xl "
+                    className="  bg-sky-950 rounded-md overflow-hidden shadow-xl  "
                     onMouseEnter={() => setIsProfileOpen(true)}
                     onMouseLeave={() => setIsProfileOpen(false)}
                   >
                     <a
                       href="#"
-                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      className="block px-4 py-2 text-gray-200 border-t-[1px] border-gray-600 hover:text-green-400 hover:bg-blue-950  "
                     >
                       Settings
                     </a>
                     <a
                       href="#"
-                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      className="block px-4 py-2 text-gray-200 border-t-[1px] border-gray-600 hover:text-green-400 hover:bg-blue-950 "
                     >
                       User
                     </a>
                     <a
                       onClick={logout}
                       href="/"
-                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                      className="block px-4 py-2 text-gray-200 border-t-[1px] border-gray-600 hover:text-green-400 hover:bg-blue-950 "
                     >
                       Sign Out
                     </a>

@@ -48,7 +48,7 @@ const Genres: React.FC = () => {
         >
           {movies?.results?.map((movie: any) => (
             <Link href={`/movie/${movie.id}`} key={movie.id} className="movie ">
-              <div className=" relative flex text-center justify-center cursor-pointer border rounded-sm border-gray-400  hover:border-green-400 ">
+              <div className=" relative flex text-center justify-center cursor-pointer border rounded-sm border-gray-400 h-full hover:border-green-400 ">
                 <img
                   src={`${
                     movie.poster_path
