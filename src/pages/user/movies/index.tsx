@@ -63,7 +63,7 @@ const Movies: React.FC = () => {
                 key={movie.id}
                 className="movie "
               >
-                <div className=" relative flex text-center justify-center cursor-pointer border rounded-sm border-gray-800 h-full hover:border-green-400 shadow-lg ">
+                <div className=" relative flex text-center justify-center cursor-pointer border rounded-sm border-gray-800  hover:border-green-400 shadow-lg ">
                   <img
                     src={`${
                       movie.poster_path
