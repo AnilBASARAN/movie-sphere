@@ -97,19 +97,17 @@ function Header() {
             </svg>
           </Link>
           <div className="flex flex-1 ">
-            {/* <div className="flex  relative hover:bg-blue-950 h-16 w-32 ">
+            <div className="flex  relative hover:bg-slate-800 h-16 w-32 ">
               <Link
                 key="1"
-                href="/"
-                className={
-            activeItem === "home" ? "text-yellow-400" : "text-white"
-            } className="flex justify-center text-center  items-center w-full"
+                href="/all-movies"
+                className="flex justify-center text-center  items-center w-full"
               >
                 All movies
               </Link>
-            </div> */}
+            </div>
             <div
-              className="flex relative hover:bg-sky-950 h-16 w-32   "
+              className="flex relative hover:bg-slate-800 h-16 w-32   "
               onMouseEnter={() => setIsOpen(true)}
               onMouseLeave={() => setIsOpen(false)}
             >
@@ -118,14 +116,14 @@ function Header() {
               </button>
 
               {isOpen && (
-                <div className="absolute flex flex-col   left-1/2 top-16 -translate-x-1/2 bg-sky-950 text-gray-200  w-full text-sm font-semibold border-t-[1px] border-gray-600  ">
+                <div className="absolute flex flex-col   left-1/2 top-16 -translate-x-1/2 bg-slate-800 text-gray-200  w-full text-sm font-semibold border-t-[1px] border-gray-600  ">
                   {genres.map((genre: any, index: any) => (
                     <Link key={index} href={`/genres/${genre.name}`}>
                       <ul>
                         <li
                           key={index}
                           id={genre.name}
-                          className="text-left p-1 px-2 border-b-[1px] border-gray-600 hover:text-green-400 hover:bg-blue-950  "
+                          className="text-left p-1 px-2 border-b-[1px] border-gray-600 hover:text-green-400 hover:bg-slate-700  "
                           onClick={() => setActiveItem(genre.id)}
                         >
                           {genre.name}
@@ -167,7 +165,7 @@ function Header() {
           )}
 
           {currentUser ? (
-            <div className="flex relative justify-center items-center  px-2 hover:bg-sky-950  hover:border-black h-10  rounded-tl-sm rounded-tr-sm  ">
+            <div className="flex relative justify-center items-center  px-2 hover:bg-slate-800  hover:border-black h-10  rounded-t-md  ">
               <button
                 onMouseEnter={() => setIsProfileOpen(true)}
                 onMouseLeave={() => setIsProfileOpen(false)}
@@ -176,34 +174,30 @@ function Header() {
                 {auth?.currentUser?.email}
               </button>
               <div
-                className={
-                  isProfileOpen
-                    ? "absolute top-full w-full  bg-sky-950    "
-                    : ""
-                }
+                className={isProfileOpen ? "absolute top-full w-full     " : ""}
               >
                 {isProfileOpen && (
                   <div
-                    className="  bg-sky-950 rounded-md overflow-hidden shadow-xl  "
+                    className="  bg-slate-800 overflow-hidden shadow-xl rounded-b-md "
                     onMouseEnter={() => setIsProfileOpen(true)}
                     onMouseLeave={() => setIsProfileOpen(false)}
                   >
                     <a
                       href="#"
-                      className="block px-4 py-2 text-gray-200 border-t-[1px] border-gray-600 hover:text-green-400 hover:bg-blue-950  "
+                      className="block px-4 py-2 text-gray-200 border-t-[1px] border-gray-600 hover:text-green-400 hover:bg-slate-700  "
                     >
                       Settings
                     </a>
                     <a
                       href="#"
-                      className="block px-4 py-2 text-gray-200 border-t-[1px] border-gray-600 hover:text-green-400 hover:bg-blue-950 "
+                      className="block px-4 py-2 text-gray-200 border-t-[1px] border-gray-600 hover:text-green-400 hover:bg-slate-700 "
                     >
                       User
                     </a>
                     <a
                       onClick={logout}
                       href="/"
-                      className="block px-4 py-2 text-gray-200 border-t-[1px] border-gray-600 hover:text-green-400 hover:bg-blue-950 "
+                      className="block px-4 py-2 text-gray-200 border-t-[1px] border-gray-600 hover:text-green-400 hover:bg-slate-700  "
                     >
                       Sign Out
                     </a>
