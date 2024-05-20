@@ -188,12 +188,12 @@ function Header() {
                     >
                       Settings
                     </a>
-                    <a
-                      href="#"
+                    <Link
+                      href={`/user/${auth?.currentUser?.email}/movies`}
                       className="block px-4 py-2 text-gray-200 border-t-[1px] border-gray-600 hover:text-green-400 hover:bg-slate-700 "
                     >
                       User
-                    </a>
+                    </Link>
                     <a
                       onClick={logout}
                       href="/"
