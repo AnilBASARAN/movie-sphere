@@ -1,21 +1,58 @@
 import Rating from "@mui/material/Rating";
 import StarIcon from "@mui/icons-material/Star";
 import Box from "@mui/material/Box";
-import { useState } from "react";
+import { /* useContext, useEffect,  */ useState } from "react";
+/* import { auth } from "@/config/firebase";
+import { MainContext } from "@/components/Context/context"; */
 
-export default function Ratings() {
-  const [value, setValue] = useState<number | null>();
-  console.log(value);
+export default function Ratings({
+  movies,
+  submitMovie,
+  updateMovie,
+  deleteMovie,
+  initialValue,
+}: any) {
+  const [value, setValue] = useState<number | null>(initialValue);
+
+  const handleValue = (newValue: number | null) => {
+    // Attempt submission
+    const submissionResult = submitMovie(movies, newValue);
+
+    // If submission fails, attempt update
+    if (!submissionResult) {
+      updateMovie(movies, newValue);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (initialValue !== 0) {
+      await deleteMovie(movies);
+      window.location.reload();
+    }
+  };
+
   return (
     <Box
       sx={{
         display: "flex",
         alignItems: "center",
+        padding: "8px",
+        color: "rgb(30 41 59)",
+        "&:hover": {
+          color: "rgb(148 163 184)",
+        },
       }}
     >
+      <button
+        onClick={handleDelete}
+        className="text-[10px] -px-4 mr-1 py-1 hover:text-white hover:font-bold transition-colors "
+      >
+        {/* {initialValue !== 0 ? <span>&#10005;</span> : " "} */}
+        &#10005;
+      </button>
       <Rating
         sx={{
-          fontSize: "2.5rem",
+          fontSize: "2.4rem",
         }}
         name="text-feedback"
         precision={0.5}
@@ -28,6 +65,7 @@ export default function Ratings() {
         value={value}
         onChange={(event, newValue) => {
           setValue(newValue);
+          handleValue(newValue);
         }}
       />
     </Box>
