@@ -24,6 +24,8 @@ export const MainContext = createContext<ThemeContext | null>(null);
 
 export const MainProvider = ({ children }: any) => {
   const [activeItem, setActiveItem] = useState<string>("");
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
+  const [initialMovieInfo, setInitialMovieInfo] = useState<any>("");
 
   // Refresh page
   const refreshPage = () => {
@@ -63,6 +65,10 @@ export const MainProvider = ({ children }: any) => {
     refreshPage,
     activeItem,
     setActiveItem,
+    isUserLoggedIn,
+    setIsUserLoggedIn,
+    initialMovieInfo,
+    setInitialMovieInfo,
   };
 
   return (
