@@ -1,6 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import ReactPlayer from "react-player";
+import { auth, db } from "@/config/firebase";
+import {
+  collection,
+  doc,
+  deleteDoc,
+  setDoc,
+  updateDoc,
+  getDoc,
+} from "firebase/firestore";
 
 import { getMovies, BASE_URL, API_KEY, IMG_URL } from "@/pages/api/api";
 import Ratings from "@/components/Rating";
@@ -17,8 +26,9 @@ const Movies: React.FC = () => {
   const [isCredits, setIsCredits] = useState<boolean>(true);
   const [showMore, setShowMore] = useState(false);
   /*  const { activeItem, setActiveItem } = useContext<any>(); */
-
-  console.log(movies);
+  const [isUserLogged, setIsUserLogged] = useState<any>(false);
+  /*   const [isMovieData, setIsMovieData] = useState(); */
+  /*   const moviesCollectionRef = collection(db, "movies"); */
 
   const toggleMore = () => {
     setShowMore(!showMore);
@@ -42,6 +52,101 @@ const Movies: React.FC = () => {
     ({ type }: any) => type === "Trailer"
   );
 
+  /*   const date = new Date();
+  console.log(date); */
+
+  const submitMovie = async (
+    { id, title, popularity, poster_path, release_date, vote_average }: any,
+    userRating: any
+  ) => {
+    try {
+      // Get Firestore collection reference for users
+
+      const usersCollectionRef = collection(db, "users");
+
+      // Set user-specific movie data using the user's UID as document ID
+      await setDoc(
+        doc(usersCollectionRef, auth.currentUser!.uid, "movies", String(id)),
+        {
+          averageRating: vote_average,
+          movieId: id,
+          popularity: popularity,
+          posterPath: poster_path,
+          releaseDate: release_date,
+          title: title,
+          userRating: userRating,
+          whenRated: 2023,
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const deleteMovie = async (movie: any) => {
+    const toString = String(movie.id);
+    const movieDoc = doc(
+      db,
+      "users",
+      auth.currentUser!.uid,
+      "movies",
+      toString
+    );
+    await deleteDoc(movieDoc);
+  };
+
+  const updateMovie = async (movie: any, newRating: number) => {
+    const toString = String(movie.id);
+    const movieDoc = doc(
+      db,
+      "users",
+      auth.currentUser!.uid,
+      "movies",
+      toString
+    );
+    await updateDoc(movieDoc, { userRating: newRating });
+  };
+
+  const [isMovieDb, setIsMovieDb] = useState<any>();
+
+  /*   const movieDataRef = collection(db, "users", auth.currentUser!.uid, "movies"); */
+
+  const userId = auth?.currentUser?.uid; // Accessing currentUser safely
+
+  const movieDataRef = userId
+    ? collection(db, "users", userId, "movies")
+    : null;
+
+  useEffect(() => {
+    if (!userId) {
+      return; // Exit early if userId is null
+    }
+
+    const getMovieFromDb = async (movieId: any) => {
+      try {
+        const docRef = doc(movieDataRef, movieId);
+        const docSnapshot = await getDoc(docRef);
+        if (docSnapshot.exists()) {
+          const movieData = {
+            ...docSnapshot.data(),
+            id: docSnapshot.id,
+          };
+          console.log(movieData);
+          setIsMovieDb(movieData);
+          /*   setMovie(movieData); // Assuming setMovie is your state setter function for the single movie */
+        } else {
+          console.log("No movie found with the specified ID");
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    // Pass the specific movie ID to retrieve
+    const movieId = id;
+    getMovieFromDb(movieId);
+  }, [userId, id]);
+
   // Get Numbers With One Decimal
   const getNumbersWithOneDecimal = (value: string) => {
     // Match numbers with up to one decimal place
@@ -60,6 +165,8 @@ const Movies: React.FC = () => {
       `${BASE_URL}/movie/${id}?&append_to_response=credits,videos&language=en-US&${API_KEY}`
     );
     setMovies(data);
+    /* setIsMovieData(data); 
+    console.log(isMovieData);*/
   };
 
   // Get Movie Id From URL
@@ -68,6 +175,14 @@ const Movies: React.FC = () => {
       handleMovieById();
     }
   }, [id]);
+
+  // Listen for changes in authentication state
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setIsUserLogged(user); // Update currentUser state when authentication state changes
+    });
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div className="flex justify-center min-h-[78vh]  ">
@@ -110,7 +225,7 @@ const Movies: React.FC = () => {
         <div className="flex gap-6  ">
           <div className="flex flex-col  items-baseline ">
             {" "}
-            <div className="w-56  ">
+            <div className="w-[228px]  ">
               {" "}
               <img
                 src={`${
@@ -122,97 +237,51 @@ const Movies: React.FC = () => {
                 className=" border-2 border-slate-800 w-full rounded-sm   "
               />
             </div>
-            <div className="bg-slate-800 w-full relative  p-2 my-2 rounded-sm flex text-center justify-center items-center cursor-pointer">
-              {/*  <div className="absolute w-full h-full flex items-center justify-center text-center align-middle opacity-0 bg-slate-950/[.0] transition hover:bg-slate-900/70 hover:opacity-100">
-                <h1 className=" text-slate-200 ">Login to rate</h1>
-              </div>
-               <div className="flex justify-around ">
-                {" "}
-                <svg
-                  clipRule="evenodd"
-                  fillRule="evenodd"
-                  stroke-linejoin="round"
-                  stroke-miterlimit="2"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  height={40}
-                  className="star-svg"
-                >
-                  <path
-                    d="m11.322 2.923c.126-.259.39-.423.678-.423.289 0 .552.164.678.423.974 1.998 2.65 5.44 2.65 5.44s3.811.524 6.022.829c.403.055.65.396.65.747 0 .19-.072.383-.231.536-1.61 1.538-4.382 4.191-4.382 4.191s.677 3.767 1.069 5.952c.083.462-.275.882-.742.882-.122 0-.244-.029-.355-.089-1.968-1.048-5.359-2.851-5.359-2.851s-3.391 1.803-5.359 2.851c-.111.06-.234.089-.356.089-.465 0-.825-.421-.741-.882.393-2.185 1.07-5.952 1.07-5.952s-2.773-2.653-4.382-4.191c-.16-.153-.232-.346-.232-.535 0-.352.249-.694.651-.748 2.211-.305 6.021-.829 6.021-.829s1.677-3.442 2.65-5.44z"
-                    fillRule="nonzero"
-                  />
-                </svg>
-                <svg
-                  clipRule="evenodd"
-                  fillRule="evenodd"
-                  stroke-linejoin="round"
-                  stroke-miterlimit="2"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  height={40}
-                  className="star-svg"
-                >
-                  <path
-                    d="m11.322 2.923c.126-.259.39-.423.678-.423.289 0 .552.164.678.423.974 1.998 2.65 5.44 2.65 5.44s3.811.524 6.022.829c.403.055.65.396.65.747 0 .19-.072.383-.231.536-1.61 1.538-4.382 4.191-4.382 4.191s.677 3.767 1.069 5.952c.083.462-.275.882-.742.882-.122 0-.244-.029-.355-.089-1.968-1.048-5.359-2.851-5.359-2.851s-3.391 1.803-5.359 2.851c-.111.06-.234.089-.356.089-.465 0-.825-.421-.741-.882.393-2.185 1.07-5.952 1.07-5.952s-2.773-2.653-4.382-4.191c-.16-.153-.232-.346-.232-.535 0-.352.249-.694.651-.748 2.211-.305 6.021-.829 6.021-.829s1.677-3.442 2.65-5.44z"
-                    fillRule="nonzero"
-                  />
-                </svg>
-                <svg
-                  clipRule="evenodd"
-                  fillRule="evenodd"
-                  stroke-linejoin="round"
-                  stroke-miterlimit="2"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  height={40}
-                  className="star-svg"
-                >
-                  <path
-                    d="m11.322 2.923c.126-.259.39-.423.678-.423.289 0 .552.164.678.423.974 1.998 2.65 5.44 2.65 5.44s3.811.524 6.022.829c.403.055.65.396.65.747 0 .19-.072.383-.231.536-1.61 1.538-4.382 4.191-4.382 4.191s.677 3.767 1.069 5.952c.083.462-.275.882-.742.882-.122 0-.244-.029-.355-.089-1.968-1.048-5.359-2.851-5.359-2.851s-3.391 1.803-5.359 2.851c-.111.06-.234.089-.356.089-.465 0-.825-.421-.741-.882.393-2.185 1.07-5.952 1.07-5.952s-2.773-2.653-4.382-4.191c-.16-.153-.232-.346-.232-.535 0-.352.249-.694.651-.748 2.211-.305 6.021-.829 6.021-.829s1.677-3.442 2.65-5.44z"
-                    fillRule="nonzero"
-                  />
-                </svg>
-                <svg
-                  clipRule="evenodd"
-                  fillRule="evenodd"
-                  stroke-linejoin="round"
-                  stroke-miterlimit="2"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  height={40}
-                  className="star-svg"
-                >
-                  <path
-                    d="m11.322 2.923c.126-.259.39-.423.678-.423.289 0 .552.164.678.423.974 1.998 2.65 5.44 2.65 5.44s3.811.524 6.022.829c.403.055.65.396.65.747 0 .19-.072.383-.231.536-1.61 1.538-4.382 4.191-4.382 4.191s.677 3.767 1.069 5.952c.083.462-.275.882-.742.882-.122 0-.244-.029-.355-.089-1.968-1.048-5.359-2.851-5.359-2.851s-3.391 1.803-5.359 2.851c-.111.06-.234.089-.356.089-.465 0-.825-.421-.741-.882.393-2.185 1.07-5.952 1.07-5.952s-2.773-2.653-4.382-4.191c-.16-.153-.232-.346-.232-.535 0-.352.249-.694.651-.748 2.211-.305 6.021-.829 6.021-.829s1.677-3.442 2.65-5.44z"
-                    fillRule="nonzero"
-                  />
-                </svg>
-                <svg
-                  clipRule="evenodd"
-                  fillRule="evenodd"
-                  stroke-linejoin="round"
-                  stroke-miterlimit="2"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  height={40}
-                  className="star-svg"
-                >
-                  <path
-                    d="m11.322 2.923c.126-.259.39-.423.678-.423.289 0 .552.164.678.423.974 1.998 2.65 5.44 2.65 5.44s3.811.524 6.022.829c.403.055.65.396.65.747 0 .19-.072.383-.231.536-1.61 1.538-4.382 4.191-4.382 4.191s.677 3.767 1.069 5.952c.083.462-.275.882-.742.882-.122 0-.244-.029-.355-.089-1.968-1.048-5.359-2.851-5.359-2.851s-3.391 1.803-5.359 2.851c-.111.06-.234.089-.356.089-.465 0-.825-.421-.741-.882.393-2.185 1.07-5.952 1.07-5.952s-2.773-2.653-4.382-4.191c-.16-.153-.232-.346-.232-.535 0-.352.249-.694.651-.748 2.211-.305 6.021-.829 6.021-.829s1.677-3.442 2.65-5.44z"
-                    fillRule="nonzero"
-                  />
-                </svg>
-              </div> */}
-              {/* <Rate
-                style={{
-                  color: "yellow",
-                  boxShadow: "10px 10px;",
-                  fontSize: "200%",
-                }}
-                allowHalf
-              /> */}
-              <Ratings />
+            <div className="bg-slate-800 w-full relative   my-2 pr-2 rounded-sm flex text-center justify-center items-center ">
+              {isUserLogged ? (
+                <div>
+                  {isMovieDb && (
+                    <Ratings
+                      initialValue={isMovieDb.userRating || 0}
+                      updateMovie={updateMovie}
+                      movies={movies}
+                      submitMovie={submitMovie}
+                      deleteMovie={deleteMovie}
+                    />
+                  )}
+                  {!isMovieDb && (
+                    <Ratings
+                      initialValue={0}
+                      updateMovie={updateMovie}
+                      movies={movies}
+                      submitMovie={submitMovie}
+                      deleteMovie={deleteMovie}
+                    />
+                  )}
+
+                  {/*  <button
+                    onClick={() => submitMovie(movies)}
+                    className="bg-green-700 text-slate-900 p-1 px-4  "
+                  >
+                    Submit
+                  </button>
+                  <button
+                    onClick={() => deleteMovie(movies)}
+                    className="bg-red-500 p-1 px-4"
+                  >
+                    Delete
+                  </button> */}
+                </div>
+              ) : (
+                <div className="w-52 ">
+                  <div className="relative">
+                    <img alt="no-rating" src="/noStar.jpg" />
+                    <div className="absolute top-0 -left-[6px] w-[228px] h-full flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity  bg-black bg-opacity-50 cursor-default">
+                      <p className="text-green-400">Login to Rate</p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
             <div className=" flex flex-col gap-2 text-slate-400 text-sm w-full ">
               <div className="flex justify-between border-b border-slate-800">
