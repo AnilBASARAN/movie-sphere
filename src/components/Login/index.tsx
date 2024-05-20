@@ -2,10 +2,11 @@ import { auth } from "@/config/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState, useEffect, useRef } from "react";
 
-const Auth = ({ handleCloseLoginForm }: any) => {
+const Login = ({ handleCloseLoginForm }: any) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [error, setError] = useState<string>("");
 
   const formRef = useRef<HTMLDivElement>(null);
 
@@ -32,7 +33,7 @@ const Auth = ({ handleCloseLoginForm }: any) => {
       setIsUserLoggedIn(true);
       handleCloseLoginForm();
     } catch (error) {
-      console.log(error);
+      setError("Invalid email or password");
     }
   };
 
@@ -46,6 +47,7 @@ const Auth = ({ handleCloseLoginForm }: any) => {
             </button>
           </div>
           <h1 className="text-3xl font-bold text-center mb-8 ">Login</h1>
+          {error && <p className="text-red-500 mb-4">{error}</p>}
           <form className="flex flex-col ">
             <input
               type="text"
@@ -54,6 +56,11 @@ const Auth = ({ handleCloseLoginForm }: any) => {
               value={email}
               required
               onChange={(e) => setEmail(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  signIn();
+                }
+              }}
             />
 
             <input
@@ -63,6 +70,11 @@ const Auth = ({ handleCloseLoginForm }: any) => {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  signIn();
+                }
+              }}
             />
             <button
               type="button"
@@ -78,4 +90,4 @@ const Auth = ({ handleCloseLoginForm }: any) => {
   );
 };
 
-export default Auth;
+export default Login;
