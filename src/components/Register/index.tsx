@@ -1,11 +1,13 @@
 import { auth, googleProvider } from "@/config/firebase";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useState, useEffect, useRef } from "react";
+import { getFirestore, doc, setDoc } from "firebase/firestore"; // Import Firestore from Firebase SDK
 
 const Register = ({ handleCloseSignInForm }: any) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [error, setError] = useState<string>("");
 
   const formRef = useRef<HTMLDivElement>(null);
 
@@ -28,11 +30,34 @@ const Register = ({ handleCloseSignInForm }: any) => {
 
   const signIn = async () => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      setIsUserLoggedIn(true);
-      handleCloseSignInForm();
-    } catch (error) {
-      console.log(error);
+      if (password.length < 6) {
+        setError("Password must be at least 6 characters long");
+      } else {
+        // Create user with email and password
+        await createUserWithEmailAndPassword(auth, email, password);
+
+        // Get the authenticated user
+        const user = auth.currentUser;
+
+        // Get Firestore database reference
+        const db = getFirestore();
+
+        // Set user data in Firestore with UID as document ID
+        await setDoc(doc(db, "users", user?.uid), {
+          email: user?.email,
+          datum: "HEAQ",
+          // Add other user data as needed
+        });
+
+        setIsUserLoggedIn(true);
+        handleCloseSignInForm();
+      }
+    } catch (error: any) {
+      if (error.code === "auth/email-already-in-use") {
+        setError("Email already in use.");
+      } else {
+        setError("An unknown error occurred. Please try again later.");
+      }
     }
   };
 
@@ -57,6 +82,9 @@ const Register = ({ handleCloseSignInForm }: any) => {
           </div>
           <h1 className="text-3xl font-bold text-center mb-8 ">Register</h1>
           <form className="flex flex-col ">
+            {error && (
+              <p className="text-sm font-bold mb-1  text-red-600">{error}</p>
+            )}
             <input
               type="text"
               className="w-full border-gray-300 text-black rounded px-3 py-2 mb-4 focus:border-blue-400 text-xl focus:text-black"
@@ -64,6 +92,11 @@ const Register = ({ handleCloseSignInForm }: any) => {
               value={email}
               required
               onChange={(e) => setEmail(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  signIn();
+                }
+              }}
             />
 
             <input
@@ -73,6 +106,11 @@ const Register = ({ handleCloseSignInForm }: any) => {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  signIn();
+                }
+              }}
             />
             <button
               type="button"
@@ -116,33 +154,6 @@ const Register = ({ handleCloseSignInForm }: any) => {
           </form>
         </div>
       )}
-
-      {/*   {!auth.currentUser && (
-        <div>
-          <input
-            className="text-black"
-            placeholder="email"
-            type="email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            className="text-black"
-            placeholder="password"
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button onClick={signIn}>Sign In</button>
-          <button onClick={signInWithGoogle}>Sign in with Google</button>
-          <button onClick={logout}>Log Out</button>
-        </div>
-      )} */}
-      {/*  <div className="flex flex-row gap-3 justify-center items-center">
-        <button className="  hover:text-green-400 ">Login</button>
-
-        <h1 className="text-gray-400 text-2xl font-light">|</h1>
-
-        <button className="  hover:text-green-400 ">Register</button>
-      </div> */}
     </div>
   );
 };
