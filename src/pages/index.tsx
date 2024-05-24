@@ -224,12 +224,8 @@ const Home: React.FC = () => {
             <div className="flex border-t border-gray-700 py-4 justify-center  gap-1 mx-4 mt-2">
               {previewMovies &&
                 previewMovies.map((movie: any) => (
-                  <div>
-                    <Link
-                      href={`/movie/${movie.id}`}
-                      key={movie.id}
-                      className="movie "
-                    >
+                  <div key={movie.id}>
+                    <Link href={`/movie/${movie.id}`} className="movie ">
                       <div className=" relative flex text-center justify-center cursor-pointer border rounded-sm border-gray-800 h-full hover:border-green-400 shadow-lg ">
                         <img
                           src={`${
