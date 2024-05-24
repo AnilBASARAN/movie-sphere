@@ -51,7 +51,8 @@ function Header() {
   }; */
 
   // Sign Out Functionality
-  const logout = async () => {
+  const logout = async (event: any) => {
+    event.preventDefault();
     try {
       await signOut(auth);
       /*   setIsUserLoggedIn(false); */
@@ -184,7 +185,7 @@ function Header() {
                       href={`/user/${auth?.currentUser?.email}/movies`}
                       className="block px-4 py-2 text-gray-200 border-t-[1px] border-gray-600 hover:text-green-400 hover:bg-slate-700 "
                     >
-                      Your Collection
+                      Collection
                     </Link>
                     {/*   <a
                       href="#"
@@ -193,13 +194,13 @@ function Header() {
                       Profile
                     </a> */}
 
-                    <a
+                    <Link
                       onClick={logout}
                       href="/"
                       className="block px-4 py-2 text-gray-200 border-t-[1px] border-gray-600 hover:text-green-400 hover:bg-slate-700  "
                     >
                       Sign Out
-                    </a>
+                    </Link>
                   </div>
                 )}
               </div>
