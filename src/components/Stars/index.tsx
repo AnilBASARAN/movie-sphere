@@ -1,5 +1,3 @@
-// components/Rating.tsx
-
 import React from "react";
 
 const Stars: React.FC<{ rating: number }> = ({ rating }) => {
@@ -23,12 +21,12 @@ const Stars: React.FC<{ rating: number }> = ({ rating }) => {
           >
             <span className="text-yellow-400 text-lg">&#9733;</span>
           </span>
-          <span className="text-gray-500 text-lg">&#9733;</span>
+          <span className="text-gray-700 text-lg">&#9733;</span>
         </span>
       );
     } else {
       stars.push(
-        <span key={i} className="text-gray-500 text-lg">
+        <span key={i} className="text-gray-700 text-lg">
           &#9733;
         </span>
       );
