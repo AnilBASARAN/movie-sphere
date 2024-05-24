@@ -52,8 +52,25 @@ const Movies: React.FC = () => {
     ({ type }: any) => type === "Trailer"
   );
 
-  /*   const date = new Date();
-  console.log(date); */
+  function getCurrentDateTimeNumber(): number {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1; // Months are zero-based
+    const day = now.getDate();
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+    const second = now.getSeconds();
+
+    // Combine the components into a single number in the format YYYYMMDDHHmmss
+    return (
+      year * 10000000000 +
+      month * 100000000 +
+      day * 1000000 +
+      hour * 10000 +
+      minute * 100 +
+      second
+    );
+  }
 
   const submitMovie = async (
     { id, title, popularity, poster_path, release_date, vote_average }: any,
@@ -75,7 +92,7 @@ const Movies: React.FC = () => {
           releaseDate: release_date,
           title: title,
           userRating: userRating,
-          whenRated: 2023,
+          whenRated: getCurrentDateTimeNumber(),
         }
       );
     } catch (error) {
@@ -124,6 +141,7 @@ const Movies: React.FC = () => {
 
     const getMovieFromDb = async (movieId: any) => {
       try {
+        // @ts-ignore
         const docRef = doc(movieDataRef, movieId);
         const docSnapshot = await getDoc(docRef);
         if (docSnapshot.exists()) {
