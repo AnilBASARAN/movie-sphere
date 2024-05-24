@@ -9,8 +9,9 @@ const Home: React.FC = () => {
 
   const handleMovies = async () => {
     const data = await getMovies(`${API_URL}&page=1`);
+    console.log(data);
     setMovies(data.results);
-    setPreviewMovies(data.results.slice(0, 10)); // Get the first five movies
+    setPreviewMovies(data.results.slice(0, 10)); // Get the first ten movies
   };
 
   const prevImage = () => {
@@ -41,7 +42,16 @@ const Home: React.FC = () => {
         setCurrentIndex(0);
       }
     }, 1000); */
-  }, []);
+    const interval = setInterval(() => {
+      if (movies && currentIndex < previewMovies.length) {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % previewMovies.length);
+      } else {
+        setCurrentIndex(0);
+      }
+    }, 5000); // Change image carousel every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [previewMovies.length]);
 
   return (
     <>
@@ -174,8 +184,7 @@ const Home: React.FC = () => {
                 />
               </svg>
               <h1 className="w-5/6 ">
-                Show some love for your favorite films, lists and reviews with a
-                “like”
+                Show some love for your favorite films, actors and directors
               </h1>
             </div>
             <div className="bg-slate-800 h-[100px] hover:bg-slate-700 flex items-center   m-4 gap-8 px-8 py-4  rounded-md">
@@ -197,7 +206,7 @@ const Home: React.FC = () => {
                 />
               </svg>
               <h1 className="w-5/6 ">
-                Discover and explore new movies and make collections
+                Discover and explore new movies and make your collection
               </h1>
             </div>
           </div>
@@ -249,10 +258,10 @@ const Home: React.FC = () => {
                     Track your personal movie collection
                   </h1>
                   <h1>
-                    1 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Totam nam commodi, iure dolorem optio excepturi, repellat
-                    voluptatibus numquam, mollitia hic quae maxime? Quo animi
-                    consequatur ab obcaecati, iure porro nemo!
+                    Track your personal movie collection by logging every film
+                    you watched and want to watch. Be as detailed as you want
+                    with features such as viewing dates, ratings, genres, and
+                    directors.
                   </h1>
                 </div>
               </div>
@@ -262,10 +271,11 @@ const Home: React.FC = () => {
                     Express your thoughts with Rating
                   </h1>
                   <h1>
-                    1 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Totam nam commodi, iure dolorem optio excepturi, repellat
-                    voluptatibus numquam, mollitia hic quae maxime? Quo animi
-                    consequatur ab obcaecati, iure porro nemo!
+                    Express your thoughts on each film in your collection by
+                    rating them. This allows you to reflect on your viewing
+                    experience and provides a personalized guide to your
+                    favorite movies. Rating your movies can help you articulate
+                    what you enjoyed or disliked about each film.
                   </h1>
                 </div>
                 <div className="flex-1 border rounded-sm border-gray-800 shadow-lg h-[420px] w-[420px] overflow-hidden  ">
@@ -281,10 +291,11 @@ const Home: React.FC = () => {
                     Explore and find new movies{" "}
                   </h1>
                   <h1>
-                    1 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Totam nam commodi, iure dolorem optio excepturi, repellat
-                    voluptatibus numquam, mollitia hic quae maxime? Quo animi
-                    consequatur ab obcaecati, iure porro nemo!
+                    Explore and find new movies to add to your collection,
+                    broadening your cinematic horizons and discovering hidden
+                    gems. This exploration not only diversifies your collection
+                    but also enriches your appreciation for different genres,
+                    directors, and cultural perspectives.
                   </h1>
                 </div>
               </div>
