@@ -1,8 +1,8 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect /* useContext */ } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { API_URL, getMovies, IMG_URL } from "@/pages/api/api";
-import Pagination from "@/pages/api/methods/pagination";
+import { /* API_URL, getMovies,  */ IMG_URL } from "@/pages/api/api";
+/* import Pagination from "@/pages/api/methods/pagination"; */
 import Stars from "@/components/Stars";
 import { auth, db } from "@/config/firebase";
 import { getDocs, collection, query } from "firebase/firestore";
@@ -10,14 +10,20 @@ import { onAuthStateChanged } from "firebase/auth";
 
 const Movies: React.FC = () => {
   const [movies, setMovies] = useState<any[]>([]);
+  const [sortedMovies, setSortedMovies] = useState<any[]>([]);
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const router = useRouter();
-  const [currentPage, setCurrentPage] = useState<any>(router?.query?.userId);
+  /*   const [currentPage, setCurrentPage] = useState<any>(router?.query?.userId); */
+  const [visibleMovies, setVisibleMovies] = useState<number>(28);
+
+  const loadMoreMovies = () => {
+    setVisibleMovies((prevVisibleMovies) => prevVisibleMovies + 28);
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         const userId = user.uid;
-        console.log(userId);
         try {
           const moviesCollectionRef = collection(db, "users", userId, "movies");
           const q = query(moviesCollectionRef);
@@ -27,19 +33,47 @@ const Movies: React.FC = () => {
             id: doc.id,
           }));
           setMovies(movieData);
-          console.log(movieData);
+          setSortedMovies(movieData);
         } catch (error) {
           console.error("Error fetching movies:", error);
         }
       } else {
         // User is signed out
         setMovies([]);
+        setSortedMovies([]);
       }
     });
 
-    // Clean up subscription on unmount
     return () => unsubscribe();
-  }, [router.query]); // Remove auth.currentUser from dependency array
+  }, [router.query]);
+
+  /*   useEffect(() => {
+    if (router.query) {
+      setCurrentPage(router.query.userId);
+    } else {
+      setCurrentPage(1);
+    }
+  }, [router.query]); */
+
+  const sortMovies = (key: any) => {
+    let direction = "desc";
+    if (sortConfig.key === key && sortConfig.direction === "desc") {
+      direction = "asc";
+    }
+
+    const sortedArray = [...movies].sort((a, b) => {
+      if (a[key] < b[key]) {
+        return direction === "asc" ? -1 : 1;
+      }
+      if (a[key] > b[key]) {
+        return direction === "asc" ? 1 : -1;
+      }
+      return 0;
+    });
+
+    setSortedMovies(sortedArray);
+    setSortConfig({ key, direction });
+  };
 
   /*   // Pagination
   const goToPage = (page: number) => {
@@ -53,55 +87,92 @@ const Movies: React.FC = () => {
     setMovies(data);
   }; */
 
-  // Get Pages From URL
-  useEffect(() => {
-    if (router.query) {
-      setCurrentPage(router.query.userId);
-    } else {
-      setCurrentPage(1);
-    }
-  }, [router.query]);
+  console.log(auth?.currentUser);
 
   return (
     <>
       <div className="flex flex-col items-center justify-start text-sm min-h-[78vh] ">
-        <div className="flex w-[1000px] mt-4 border-b  text-gray-400">
-          <div className="flex-1">
-            <h1>Ratings</h1>
+        {sortedMovies && sortedMovies.length > 0 && (
+          <div className="flex w-[1000px] mt-4 border-b  text-gray-400">
+            <div className="flex-1 font-semibold">
+              <h1>
+                {sortedMovies.length}{" "}
+                {sortedMovies.length > 1 ? "Films" : "Film"}
+              </h1>
+            </div>
+            <div className="flex gap-6">
+              <button
+                onClick={() => sortMovies("whenRated")}
+                className="hover:text-gray-200 font-semibold focus:text-green-600"
+              >
+                When Added{" "}
+                <span className="text-xs">
+                  {sortConfig.key === "whenRated"
+                    ? sortConfig.direction === "asc"
+                      ? "▲"
+                      : "▼"
+                    : "▲"}
+                </span>
+              </button>
+
+              <button
+                onClick={() => sortMovies("releaseDate")}
+                className="hover:text-gray-200 font-semibold focus:text-green-600"
+              >
+                Release Date{" "}
+                <span className="text-xs">
+                  {sortConfig.key === "releaseDate"
+                    ? sortConfig.direction === "asc"
+                      ? "▲"
+                      : "▼"
+                    : "▲"}
+                </span>
+              </button>
+              <button
+                onClick={() => sortMovies("userRating")}
+                className="hover:text-gray-200 font-semibold focus:text-green-600"
+              >
+                Your Rating{" "}
+                <span className="text-xs">
+                  {sortConfig.key === "userRating"
+                    ? sortConfig.direction === "asc"
+                      ? "▲"
+                      : "▼"
+                    : "▲"}
+                </span>
+              </button>
+              <button
+                onClick={() => sortMovies("averageRating")}
+                className="hover:text-gray-200 font-semibold focus:text-green-600"
+              >
+                Average Rating{" "}
+                <span className="text-xs">
+                  {sortConfig.key === "averageRating"
+                    ? sortConfig.direction === "asc"
+                      ? "▲"
+                      : "▼"
+                    : "▲"}
+                </span>
+              </button>
+            </div>
           </div>
-          <div className="flex gap-6 ">
-            <div>Sort by:</div>
-            <button className="hover:text-gray-200  font-semibold">
-              When Added <span className="text-xs">&#9660;</span>
-            </button>
-            <button className="hover:text-gray-200 font-semibold">
-              Release Date <span className="text-xs">&#9650;</span>
-            </button>
-            <button className="hover:text-gray-200 font-semibold">
-              Your Rating <span className="text-xs">&#9650;</span>
-            </button>
-          </div>
-        </div>
+        )}
         <div className="grid grid-cols-7  justify-center w-[1000px] gap-3 m-4">
-          {movies &&
-            movies.map((movie: any) => (
-              <div>
-                <Link
-                  href={`/movie/${movie.movieId}`}
-                  key={movie.id}
-                  className="movie "
-                >
-                  <div className=" relative flex text-center justify-center cursor-pointer border rounded-sm border-gray-800  hover:border-green-400 shadow-lg ">
+          {sortedMovies &&
+            sortedMovies.slice(0, visibleMovies).map((movie) => (
+              <div key={movie.id}>
+                <Link href={`/movie/${movie.movieId}`} className="movie">
+                  <div className="relative flex text-center justify-center h-[88%]  cursor-pointer border rounded-sm border-gray-800 hover:border-green-400 shadow-lg group">
                     <img
-                      src={`${
+                      src={
                         movie.posterPath
-                          ? IMG_URL + movie.posterPath
+                          ? `${IMG_URL}${movie.posterPath}`
                           : "/noimage.jpg"
-                      }`}
-                      alt={movie.title}
-                      className=" "
+                      }
+                      alt={movie.title || "No Title"}
+                      className=""
                     />
-                    <div className="absolute w-full h-full flex font-bold items-center justify-center opacity-0 bg-slate-950/[.0] transition hover:bg-slate-950/70 hover:opacity-100  ">
+                    <div className="absolute w-full h-full flex font-bold items-center justify-center opacity-0 bg-slate-950/[.0] transition group-hover:bg-slate-950/70 group-hover:opacity-100">
                       <h3 className="">{movie.title}</h3>
                     </div>
                   </div>
@@ -110,6 +181,19 @@ const Movies: React.FC = () => {
               </div>
             ))}
         </div>
+        {sortedMovies?.length == 0 && (
+          <div className="flex justify-center items-center align-middle text-xl text-gray-200 ">
+            There is no movie here...
+          </div>
+        )}
+        {visibleMovies < sortedMovies.length && (
+          <button
+            onClick={loadMoreMovies}
+            className="mb-4 px-8 py-2 bg-green-700 text-white rounded hover:bg-green-500 transition"
+          >
+            Load More
+          </button>
+        )}
       </div>
       {/*  {movies && movies.total_pages > 1 && (
         <Pagination
