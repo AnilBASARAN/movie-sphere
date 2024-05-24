@@ -163,7 +163,7 @@ const Movies: React.FC = () => {
               <div>
                 <Link
                   href={`/movie/${movie.movieId}`}
-                  key={movie.id}
+                  key={movie.movieId}
                   className="movie"
                 >
                   <div className="relative flex text-center justify-center h-[88%]  cursor-pointer border rounded-sm border-gray-800 hover:border-green-400 shadow-lg group">
