@@ -160,8 +160,12 @@ const Movies: React.FC = () => {
         <div className="grid grid-cols-7  justify-center w-[1000px] gap-3 m-4">
           {sortedMovies &&
             sortedMovies.slice(0, visibleMovies).map((movie) => (
-              <div key={movie.id}>
-                <Link href={`/movie/${movie.movieId}`} className="movie">
+              <div>
+                <Link
+                  href={`/movie/${movie.movieId}`}
+                  key={movie.id}
+                  className="movie"
+                >
                   <div className="relative flex text-center justify-center h-[88%]  cursor-pointer border rounded-sm border-gray-800 hover:border-green-400 shadow-lg group">
                     <img
                       src={
