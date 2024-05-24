@@ -43,9 +43,9 @@ const Register = ({ handleCloseSignInForm }: any) => {
         const db = getFirestore();
 
         // Set user data in Firestore with UID as document ID
+        // @ts-ignore
         await setDoc(doc(db, "users", user?.uid), {
           email: user?.email,
-          datum: "HEAQ",
           // Add other user data as needed
         });
 
