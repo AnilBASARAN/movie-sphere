@@ -48,7 +48,7 @@ const Home: React.FC = () => {
       } else {
         setCurrentIndex(0);
       }
-    }, 5000); // Change image carousel every 5 seconds
+    }, 7000); // Change image carousel every 7 seconds
 
     return () => clearInterval(interval);
   }, [previewMovies.length]);
