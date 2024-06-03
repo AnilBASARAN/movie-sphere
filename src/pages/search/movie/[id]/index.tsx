@@ -43,7 +43,7 @@ const Search: React.FC = () => {
   return (
     <>
       <div className="flex  items-center justify-center text-sm min-h-[78vh] ">
-        <div id="main" className="block w-[1000px] m-4 ">
+        <div id="main" className="block max-w-[1000px] m-4 ">
           <div className="text-center border-b border-gray-800 pb-4 ">
             <h1 className="text-gray-300">
               Total Results:{" "}
@@ -70,7 +70,7 @@ const Search: React.FC = () => {
               </Link>
               <div className="flex flex-col justify-center m-4  ">
                 <div className=" ">
-                  <h3 className=" text-xl font-bold  ">
+                  <h3 className=" text-2xl md:text-xl font-bold  ">
                     <Link
                       href={`/movie/${movie.id}`}
                       className="hover:text-green-400 "
@@ -84,7 +84,7 @@ const Search: React.FC = () => {
                 </div>
 
                 <div>
-                  <h3 className=" text-sm text-slate-400  ">
+                  <h3 className=" text-base md:text-sm text-slate-400  ">
                     {movie.title !== movie.original_title && (
                       <span className="mr-1 text-slate-400">
                         Original Title:{" "}
@@ -108,7 +108,7 @@ const Search: React.FC = () => {
                   </h3>
                 </div>
 
-                <div className="mt-2 text-slate-400   ">
+                <div className="mt-2 text-slate-400 text-base md:text-sm  ">
                   <ToggleText key={movie.id} text={movie.overview} />
                 </div>
               </div>
