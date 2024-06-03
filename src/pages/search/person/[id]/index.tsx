@@ -50,7 +50,7 @@ const Search: React.FC = () => {
               </h1>
             </div>
           </div>
-          <div className="grid grid-cols-5 justify-center mx-2  gap-3 ">
+          <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 justify-center mx-2  gap-3 ">
             {(details?.movie_credits?.cast || [])
               .concat(details?.movie_credits?.crew || [])
               .reduce((uniqueMovies: any[], movie: any) => {

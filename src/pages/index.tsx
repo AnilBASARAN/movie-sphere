@@ -48,15 +48,15 @@ const Home: React.FC = () => {
       } else {
         setCurrentIndex(0);
       }
-    }, 5000); // Change image carousel every 5 seconds
+    }, 7000); // Change image carousel every 7 seconds
 
     return () => clearInterval(interval);
   }, [previewMovies.length]);
 
   return (
     <>
-      <div className="flex flex-col  justify-center text-sm min-h-[78vh]">
-        <div className="flex w-[1000px] h-[600px]  m-auto p-4 relative group ">
+      <div className="flex flex-col  justify-center text-sm min-h-[78vh]  ">
+        <div className="flex w-full   max-w-[1000px] h-[300px] sm:h-[400px] lg:h-[600px] mx-auto p-4 relative group">
           {previewMovies && (
             <div className="w-full h-full rounded-2xl   ">
               <Link href={`/movie/${previewMovies[currentIndex].id}`}>
@@ -84,11 +84,11 @@ const Home: React.FC = () => {
               </div>
               <div className=" p-4 my-4 absolute bottom-[0%] bg-black bg-opacity-50 rounded-tr-2xl rounded-bl-2xl  ">
                 <img
-                  className="h-16 border-b-2 pb-1 "
+                  className="h-10 lg:h-16  border-b-2 pb-1 "
                   src="/logo.png"
                   alt="logo"
                 />
-                <div className="text-gray-400  ">
+                <div className="text-gray-400 text-xs lg:text-sm  ">
                   <h1>The digital hub for movie buffs</h1>
                 </div>
               </div>
@@ -124,7 +124,7 @@ const Home: React.FC = () => {
               </div>
             </div>
           </div> */}
-          <div className="grid grid-cols-2  max-w-[1000px]  ">
+          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 max-w-[1000px]">
             <div className="bg-slate-800 h-[100px] hover:bg-slate-700 flex items-center gap-8 py-4 m-4 px-8 rounded-md  ">
               <svg
                 className="w-1/6 "
@@ -137,7 +137,7 @@ const Home: React.FC = () => {
                 <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
               </svg>
 
-              <h1 className="w-5/6  ">
+              <h1 className="w-5/6 text-lg md:text-sm ">
                 Keep track of every film you’ve ever watched (or just start from
                 the day you join)
               </h1>
@@ -160,7 +160,7 @@ const Home: React.FC = () => {
                   fillRule="nonzero"
                 />
               </svg>
-              <h1 className="w-5/6 ">
+              <h1 className="w-5/6 text-lg md:text-sm ">
                 Rate each film on a five-star scale (with halves) to record and
                 share your reaction
               </h1>
@@ -183,7 +183,7 @@ const Home: React.FC = () => {
                   fillRule="nonzero"
                 />
               </svg>
-              <h1 className="w-5/6 ">
+              <h1 className="w-5/6 text-lg md:text-sm ">
                 Show some love for your favorite films, actors and directors
               </h1>
             </div>
@@ -205,12 +205,12 @@ const Home: React.FC = () => {
                   fillRule="nonzero"
                 />
               </svg>
-              <h1 className="w-5/6 ">
+              <h1 className="w-5/6 text-lg md:text-sm ">
                 Discover and explore new movies and make your collection
               </h1>
             </div>
           </div>
-          <div className="flex flex-col mt-8 w-[1000px]">
+          <div className="flex flex-col  max-w-[1000px]">
             <div className="flex justify-between">
               <div className=" mx-4 text-gray-400 ">Recent Movies</div>{" "}
               <Link
@@ -221,7 +221,7 @@ const Home: React.FC = () => {
               </Link>
             </div>
 
-            <div className="flex border-t border-gray-700 py-4 justify-center  gap-1 mx-4 mt-2">
+            <div className=" border-t border-gray-700 py-4 justify-center  gap-1 mx-4 mt-2 grid grid-cols-5 md:flex ">
               {previewMovies &&
                 previewMovies.map((movie: any) => (
                   <div key={movie.id}>
@@ -242,14 +242,18 @@ const Home: React.FC = () => {
                 ))}
             </div>
             <div className="flex flex-col max-w-[1000px] mx-4 text-gray-200">
-              <div className="text-3xl font-bold my-8">
+              <div className="text-3xl font-bold my-8 text-center md:text-start">
                 <h1>In Movie-Sphere You Can...</h1>
               </div>
-              <div className="flex border-b border- border-gray-700 gap-16 justify-center items-center pt-4 pb-16 ">
-                <div className="flex-1 border rounded-sm border-gray-800 shadow-lg h-[420px] w-[420px] overflow-hidden  ">
-                  <img className="   " src="/movie.png" alt="promote" />
+              <div className="flex flex-col md:flex-row  border-b border- border-gray-700 gap-16 justify-center items-center py-16  ">
+                <div className="overflow-hidden  ">
+                  <img
+                    className="flex-1 border rounded-sm border-gray-800 shadow-lg max-h-[420px] max-w-[420px]    "
+                    src="/movie.png"
+                    alt="promote"
+                  />
                 </div>
-                <div className="flex flex-col gap-4 flex-1 text-base ">
+                <div className="flex flex-col gap-4 flex-1 text-xl md:text-base ">
                   <h1 className="text-2xl font-bold ">
                     Track your personal movie collection
                   </h1>
@@ -261,8 +265,8 @@ const Home: React.FC = () => {
                   </h1>
                 </div>
               </div>
-              <div className="flex border-b border- border-gray-700 gap-16 justify-center items-center py-16  ">
-                <div className="flex flex-col gap-4 flex-1 text-base ">
+              <div className="flex flex-col md:flex-row  border-b border- border-gray-700 gap-16 justify-center items-center py-16  ">
+                <div className="flex flex-col gap-4 flex-1 text-xl md:text-base ">
                   <h1 className="text-2xl font-bold ">
                     Express your thoughts with Rating
                   </h1>
@@ -274,15 +278,23 @@ const Home: React.FC = () => {
                     what you enjoyed or disliked about each film.
                   </h1>
                 </div>
-                <div className="flex-1 border rounded-sm border-gray-800 shadow-lg h-[420px] w-[420px] overflow-hidden  ">
-                  <img src="/rate.png" alt="promote" />
+                <div className="overflow-hidden">
+                  <img
+                    src="/rate.png"
+                    alt="promote"
+                    className="flex-1 border rounded-sm border-gray-800 shadow-lg max-h-[420px] max-w-[420px]    "
+                  />
                 </div>
               </div>
-              <div className="flex  gap-16 justify-center items-center border-b  border-gray-700 py-16  ">
-                <div className="flex-1   border rounded-sm border-gray-800 shadow-lg h-[420px] w-[420px] overflow-hidden  ">
-                  <img src="/search.png" alt="promote" />
+              <div className="flex flex-col md:flex-row  border-b border- border-gray-700 gap-16 justify-center items-center py-16   ">
+                <div className="overflow-hidden  ">
+                  <img
+                    className="flex-1 border rounded-sm border-gray-800 shadow-lg  max-h-[420px] max-w-[420px]    "
+                    src="/search.png"
+                    alt="promote"
+                  />
                 </div>
-                <div className="flex flex-col gap-4 flex-1 text-base ">
+                <div className="flex flex-col gap-4 flex-1 text-xl md:text-base ">
                   <h1 className="text-2xl font-bold ">
                     Explore and find new movies{" "}
                   </h1>

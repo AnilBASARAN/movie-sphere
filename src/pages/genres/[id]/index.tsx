@@ -44,7 +44,7 @@ const Genres: React.FC = () => {
       <div className="flex justify-center text-sm min-h-[78vh] ">
         <div
           id="main"
-          className="grid grid-cols-5 justify-center  w-[1000px] gap-3 m-4"
+          className="grid grid-cols-4  lg:grid-cols-5 justify-center w-full max-w-[1000px] gap-3 m-4"
         >
           {movies?.results?.map((movie: any) => (
             <Link href={`/movie/${movie.id}`} key={movie.id} className="movie ">
@@ -56,7 +56,7 @@ const Genres: React.FC = () => {
                       : "/noimage.jpg"
                   }`}
                   alt={movie.title}
-                  className=" "
+                  className="w-full h-auto"
                 />
                 <div className="absolute w-full h-full flex font-bold items-center justify-center opacity-0 bg-slate-950/[.0] transition hover:bg-slate-950/70 hover:opacity-100  ">
                   <h3 className="">{movie.title}</h3>
