@@ -27,9 +27,9 @@ const Search: React.FC = () => {
   return (
     <div className="flex justify-center  min-h-[78vh]  ">
       {details && (
-        <div className="flex items-start justify-center w-[1000px] p-2 gap-6 ">
-          <div>
-            <div className="w-56">
+        <div className="flex items-start justify-center max-w-[1000px] p-2 gap-1 md:gap-6 ">
+          <div className="w-32 md:w-56">
+            <div className="w-full">
               {" "}
               <img
                 src={`${
@@ -45,12 +45,12 @@ const Search: React.FC = () => {
               <h1 className="text-center font-bold text-slate-200 my-2">
                 {details?.name}{" "}
               </h1>
-              <h1 className="w-56 text-center text-slate-400  text-sm">
+              <h1 className="w-28 sm:w-32 md:w-56 text-center text-slate-400  text-xs md:text-sm">
                 {details?.biography || "There is no data about this person"}{" "}
               </h1>
             </div>
           </div>
-          <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 justify-center mx-2  gap-3 ">
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 justify-center mx-2  gap-3 ">
             {(details?.movie_credits?.cast || [])
               .concat(details?.movie_credits?.crew || [])
               .reduce((uniqueMovies: any[], movie: any) => {

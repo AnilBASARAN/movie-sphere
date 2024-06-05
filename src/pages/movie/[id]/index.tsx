@@ -204,7 +204,7 @@ const Movies: React.FC = () => {
 
   return (
     <div className="flex justify-center min-h-[78vh]  ">
-      <div className=" w-[1000px] m-4  ">
+      <div className=" max-w-[1000px] m-4  ">
         <div className="mb-4 pointer-events-none   ">
           {trailer && trailer[0] ? (
             <div className=" relative pt-[56.25%]">
@@ -241,9 +241,9 @@ const Movies: React.FC = () => {
           )}
         </div>
         <div className="flex gap-6  ">
-          <div className="flex flex-col  items-baseline ">
+          <div className="flex flex-col w-32 lg:w-[228px] items-baseline ">
             {" "}
-            <div className="w-[228px]  ">
+            <div className="w-full lg:w-[228px]  ">
               {" "}
               <img
                 src={`${
@@ -292,16 +292,18 @@ const Movies: React.FC = () => {
                 </div>
               ) : (
                 <div className="w-52 ">
-                  <div className="relative">
+                  <div className="relative ">
                     <img alt="no-rating" src="/noStar.jpg" />
-                    <div className="absolute top-0 -left-[6px] w-[228px] h-full flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity  bg-black bg-opacity-50 cursor-default">
-                      <p className="text-green-400">Login to Rate</p>
+                    <div className="absolute top-0  w-32 md:w-[228px] md:-left-[6px] h-full flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity  bg-black bg-opacity-50 cursor-default">
+                      <p className="text-green-400 text-sm md:text-base">
+                        Login to Rate
+                      </p>
                     </div>
                   </div>
                 </div>
               )}
             </div>
-            <div className=" flex flex-col gap-2 text-slate-400 text-sm w-full ">
+            <div className=" flex flex-col gap-2 text-slate-400 text-xs md:text-sm w-full ">
               <div className="flex justify-between border-b border-slate-800">
                 <h1 className=" ">Runtime: </h1>
                 <h1> {movies.runtime} mins</h1>
@@ -342,7 +344,7 @@ const Movies: React.FC = () => {
             </div>
           </div>
           <div className="flex flex-col flex-1">
-            <div className="text-2xl font-bold flex items-baseline gap-2">
+            <div className="text-lg md:text-2xl font-bold flex items-baseline gap-2">
               <h1>{movies.title}</h1>
               {movies.title !== movies.original_title && (
                 <span className=" font-medium font-serif text-slate-400 text-lg">
@@ -350,8 +352,8 @@ const Movies: React.FC = () => {
                 </span>
               )}
             </div>
-            <div className="flex gap-2">
-              <h1 className="text-slate-200 underline">
+            <div className="flex gap-2 text-xs md:text-base ">
+              <h1 className="text-slate-200 underline   ">
                 {movies.release_date?.slice(0, 4)}
               </h1>{" "}
               <h1 className="text-slate-400">Directed by:</h1>{" "}
@@ -367,13 +369,13 @@ const Movies: React.FC = () => {
                 </Link>
               )}
             </div>
-            <div className="text-slate-400 mt-4 ">
+            <div className="text-slate-400 mt-4 text-xs md:text-base ">
               <h1>{movies.tagline}</h1>
             </div>
-            <div className="text-slate-400 mt-4 text-sm">
+            <div className="text-slate-400 mt-4 text-xs md:text-sm">
               <p>{movies.overview}</p>
             </div>
-            <div className="mt-4 flex gap-2">
+            <div className="mt-4 flex gap-1 md:gap-2 text-[10px] md:text-base">
               {movies.genres?.map((genre: any) => (
                 <Link
                   href={`/genres/${genre.name}`}
@@ -385,7 +387,7 @@ const Movies: React.FC = () => {
               ))}{" "}
             </div>
 
-            <div className="border-b flex gap-6 justify-center  py-2 border-slate-700 text-slate-200 my-4 text-center ">
+            <div className="border-b flex gap-6 justify-center  py-2 border-slate-700 text-slate-200 md:my-4 text-center text-sm md:text-base ">
               <button
                 className={`hover:text-green-300 ${
                   isCredits ? "text-green-400" : "text-slate-300"
@@ -403,35 +405,35 @@ const Movies: React.FC = () => {
                 Crew
               </button>{" "}
             </div>
-            <div className="m-1">
+            <div className="m-1 text-[10px] md:text-sm">
               {isCredits &&
                 movies.credits?.cast
-                  .slice(0, showMore ? undefined : 35)
+                  .slice(0, showMore ? undefined : 15)
                   .map((member: any) => (
                     <Link
                       href={`/search/person/${member.id}`}
                       key={member.name}
                     >
-                      <h1 className="inline-block text-sm m-1 bg-slate-800 px-2 py-1 rounded-md text-slate-400 hover:text-slate-100">
+                      <h1 className="inline-block  m-1 bg-slate-800 px-2 py-1 rounded-md text-slate-400 hover:text-slate-100">
                         {member.name}{" "}
                       </h1>
                     </Link>
                   ))}
               {!isCredits &&
                 movies.credits?.crew
-                  .slice(0, showMore ? undefined : 35)
+                  .slice(0, showMore ? undefined : 15)
                   .map((member: any) => (
                     <h1
                       key={member.name}
-                      className="inline-block text-sm m-1 bg-slate-800 px-2 py-1 rounded-md text-slate-400 hover:text-slate-100"
+                      className="inline-block  m-1 bg-slate-800 px-2 py-1 rounded-md text-slate-400 hover:text-slate-100"
                     >
                       {member.name}{" "}
                     </h1>
                   ))}
             </div>
-            {movies.credits?.cast.length > 30 && (
+            {movies.credits?.cast.length > 15 && (
               <button
-                className="w-40 underline self-center text-sm bg-slate-800 px-2 py-1 rounded-md text-slate-400 hover:text-slate-100"
+                className="w-40 underline self-center text-[10px] md:text-sm bg-slate-800 px-2 py-1 rounded-md text-slate-400 hover:text-slate-100"
                 onClick={toggleMore}
               >
                 {showMore ? "Show Less" : "Show More"}

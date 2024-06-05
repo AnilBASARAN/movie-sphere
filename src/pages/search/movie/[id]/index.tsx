@@ -56,7 +56,7 @@ const Search: React.FC = () => {
               className=" flex border-b rounded-sm border-gray-800"
             >
               <Link href={`/movie/${movie.id}`} className=" ">
-                <div className=" w-28 mr-4 ">
+                <div className=" w-20 md:w-28 mr-4 ">
                   <img
                     src={`${
                       movie.poster_path
@@ -64,38 +64,38 @@ const Search: React.FC = () => {
                         : "/noimage.jpg"
                     }`}
                     alt={movie.title}
-                    className=" h-40 m-2 mr-4 hover:border-green-400 border rounded-sm "
+                    className="  m-2 mr-4 hover:border-green-400 border rounded-sm "
                   />
                 </div>
               </Link>
-              <div className="flex flex-col justify-center m-4  ">
+              <div className="flex flex-col mx-4 my-2  ">
                 <div className=" ">
-                  <h3 className=" text-2xl md:text-xl font-bold  ">
+                  <h3 className="mb-1 text-base md:text-xl font-bold  ">
                     <Link
                       href={`/movie/${movie.id}`}
                       className="hover:text-green-400 "
                     >
                       {movie.title}{" "}
                     </Link>
-                    <span className="font-medium text-slate-400 ml-2  ">
+                    <span className="font-medium text-slate-400  ">
                       {movie.release_date.slice(0, 4)}
                     </span>{" "}
                   </h3>
                 </div>
 
                 <div>
-                  <h3 className=" text-base md:text-sm text-slate-400  ">
+                  <h3 className="text-sm md:text-base text-slate-400  ">
                     {movie.title !== movie.original_title && (
-                      <span className="mr-1 text-slate-400">
+                      <span className="mr-1 text-slate-400 ">
                         Original Title:{" "}
-                        <span className="font-serif text-slate-400 text-sm ml-1 ">
+                        <span className="font-serif text-slate-400  ml-1 ">
                           '{movie.original_title}'{" "}
                         </span>
                       </span>
                     )}
 
                     <span
-                      className={`ml-1 ${
+                      className={`${
                         movie.vote_average > 7.95
                           ? "vote-high"
                           : movie.vote_average > 4.95
@@ -108,7 +108,7 @@ const Search: React.FC = () => {
                   </h3>
                 </div>
 
-                <div className="mt-2 text-slate-400 text-base md:text-sm  ">
+                <div className="mt-2 text-slate-400 text-xs md:text-sm  ">
                   <ToggleText key={movie.id} text={movie.overview} />
                 </div>
               </div>

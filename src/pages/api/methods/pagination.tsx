@@ -2,16 +2,16 @@ import React from "react";
 
 function Pagination({ movies, currentPage, goToPage }: any) {
   return (
-    <div className="flex justify-center gap-3 mb-3 text-2xl lg:text-base ">
+    <div className="flex justify-center gap-3 mb-3 text-lg lg:text-base ">
       {currentPage == 1 ? (
         <div
-          className={`flex justify-center items-center  w-11 text-gray-600 mr-7 lg:mr-5 `}
+          className={`flex justify-center items-center  w-11 text-gray-600 mr-5  `}
         >
           <button disabled>Previous</button>
         </div>
       ) : (
         <div
-          className={`flex justify-center items-center  w-11 mr-7 lg:mr-5 hover:text-green-400 `}
+          className={`flex justify-center items-center  w-11 mr-5  hover:text-green-400 `}
         >
           <button onClick={() => goToPage(currentPage - 1)}>Previous</button>
         </div>

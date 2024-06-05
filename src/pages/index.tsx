@@ -55,7 +55,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <div className="flex flex-col  justify-center text-sm min-h-[78vh]  ">
+      <div className="flex flex-col  justify-center text-sm min-h-[78vh]   ">
         <div className="flex w-full   max-w-[1000px] h-[300px] sm:h-[400px] lg:h-[600px] mx-auto p-4 relative group">
           {previewMovies && (
             <div className="w-full h-full rounded-2xl   ">
@@ -82,7 +82,7 @@ const Home: React.FC = () => {
               >
                 &#707;
               </div>
-              <div className=" p-4 my-4 absolute bottom-[0%] bg-black bg-opacity-50 rounded-tr-2xl rounded-bl-2xl  ">
+              <div className="absolute p-4 my-4 top-[0%] md:top-auto md:bottom-[0%] bg-black bg-opacity-50 md:rounded-tr-2xl md:rounded-bl-2xl rounded-br-2xl md:rounded-br-none rounded-tl-2xl md:rounded-tl-none ">
                 <img
                   className="h-10 lg:h-16  border-b-2 pb-1 "
                   src="/logo.png"
@@ -125,7 +125,7 @@ const Home: React.FC = () => {
             </div>
           </div> */}
           <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 max-w-[1000px]">
-            <div className="bg-slate-800 h-[100px] hover:bg-slate-700 flex items-center gap-8 py-4 m-4 px-8 rounded-md  ">
+            <div className="bg-slate-800 h-[100px] hover:bg-slate-700 flex items-center gap-8  my-2 mx-4 md:my-4 px-8 py-4 rounded-md  ">
               <svg
                 className="w-1/6 "
                 xmlns="http://www.w3.org/2000/svg"
@@ -137,12 +137,12 @@ const Home: React.FC = () => {
                 <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
               </svg>
 
-              <h1 className="w-5/6 text-lg md:text-sm ">
+              <h1 className="w-5/6  ">
                 Keep track of every film you’ve ever watched (or just start from
                 the day you join)
               </h1>
             </div>
-            <div className="bg-slate-800  h-[100px] hover:bg-slate-700 flex items-center  m-4 gap-8 py-4  px-8 rounded-md">
+            <div className="bg-slate-800  h-[100px] hover:bg-slate-700 flex items-center  gap-8  my-2 mx-4 md:my-4 px-8 py-4  rounded-md">
               <svg
                 className="w-1/6 "
                 clipRule="evenodd"
@@ -160,12 +160,12 @@ const Home: React.FC = () => {
                   fillRule="nonzero"
                 />
               </svg>
-              <h1 className="w-5/6 text-lg md:text-sm ">
+              <h1 className="w-5/6  ">
                 Rate each film on a five-star scale (with halves) to record and
                 share your reaction
               </h1>
             </div>
-            <div className="bg-slate-800 h-[100px] hover:bg-slate-700 flex items-center  m-4 gap-8 px-8 py-4  rounded-md">
+            <div className="bg-slate-800 h-[100px] hover:bg-slate-700 flex items-center  gap-8  my-2 mx-4 md:my-4 px-8 py-4 rounded-md">
               <svg
                 className="w-1/6 "
                 clipRule="evenodd"
@@ -183,11 +183,11 @@ const Home: React.FC = () => {
                   fillRule="nonzero"
                 />
               </svg>
-              <h1 className="w-5/6 text-lg md:text-sm ">
+              <h1 className="w-5/6  ">
                 Show some love for your favorite films, actors and directors
               </h1>
             </div>
-            <div className="bg-slate-800 h-[100px] hover:bg-slate-700 flex items-center   m-4 gap-8 px-8 py-4  rounded-md">
+            <div className="bg-slate-800 h-[100px] hover:bg-slate-700 flex items-center   gap-8  my-2 mx-4 md:my-4 px-8 py-4  rounded-md">
               <svg
                 className="w-1/6 "
                 clipRule="evenodd"
@@ -205,12 +205,12 @@ const Home: React.FC = () => {
                   fillRule="nonzero"
                 />
               </svg>
-              <h1 className="w-5/6 text-lg md:text-sm ">
+              <h1 className="w-5/6  ">
                 Discover and explore new movies and make your collection
               </h1>
             </div>
           </div>
-          <div className="flex flex-col  max-w-[1000px]">
+          <div className="flex flex-col w-full  max-w-[1000px]">
             <div className="flex justify-between">
               <div className=" mx-4 text-gray-400 ">Recent Movies</div>{" "}
               <Link
@@ -242,18 +242,18 @@ const Home: React.FC = () => {
                 ))}
             </div>
             <div className="flex flex-col max-w-[1000px] mx-4 text-gray-200">
-              <div className="text-3xl font-bold my-8 text-center md:text-start">
+              <div className="text-3xl font-bold mt-8 text-center md:text-start">
                 <h1>In Movie-Sphere You Can...</h1>
               </div>
               <div className="flex flex-col md:flex-row  border-b border- border-gray-700 gap-16 justify-center items-center py-16  ">
                 <div className="overflow-hidden  ">
                   <img
-                    className="flex-1 border rounded-sm border-gray-800 shadow-lg max-h-[420px] max-w-[420px]    "
+                    className="flex-1 border rounded-sm border-gray-800 shadow-lg max-h-[420px] max-w-[420px] w-full    "
                     src="/movie.png"
                     alt="promote"
                   />
                 </div>
-                <div className="flex flex-col gap-4 flex-1 text-xl md:text-base ">
+                <div className="flex flex-col gap-4 flex-1  ">
                   <h1 className="text-2xl font-bold ">
                     Track your personal movie collection
                   </h1>
@@ -266,7 +266,7 @@ const Home: React.FC = () => {
                 </div>
               </div>
               <div className="flex flex-col md:flex-row  border-b border- border-gray-700 gap-16 justify-center items-center py-16  ">
-                <div className="flex flex-col gap-4 flex-1 text-xl md:text-base ">
+                <div className="flex flex-col gap-4 flex-1  ">
                   <h1 className="text-2xl font-bold ">
                     Express your thoughts with Rating
                   </h1>
@@ -282,19 +282,19 @@ const Home: React.FC = () => {
                   <img
                     src="/rate.png"
                     alt="promote"
-                    className="flex-1 border rounded-sm border-gray-800 shadow-lg max-h-[420px] max-w-[420px]    "
+                    className="flex-1 border rounded-sm border-gray-800 shadow-lg max-h-[420px] max-w-[420px] w-full    "
                   />
                 </div>
               </div>
-              <div className="flex flex-col md:flex-row  border-b border- border-gray-700 gap-16 justify-center items-center py-16   ">
+              <div className="flex flex-col md:flex-row  border- border-gray-700 gap-16 justify-center items-center py-16   ">
                 <div className="overflow-hidden  ">
                   <img
-                    className="flex-1 border rounded-sm border-gray-800 shadow-lg  max-h-[420px] max-w-[420px]    "
+                    className="flex-1 border rounded-sm border-gray-800 shadow-lg  max-h-[420px] max-w-[420px]  w-full   "
                     src="/search.png"
                     alt="promote"
                   />
                 </div>
-                <div className="flex flex-col gap-4 flex-1 text-xl md:text-base ">
+                <div className="flex flex-col gap-4 flex-1 ">
                   <h1 className="text-2xl font-bold ">
                     Explore and find new movies{" "}
                   </h1>
