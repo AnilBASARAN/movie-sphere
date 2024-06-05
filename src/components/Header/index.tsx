@@ -40,22 +40,15 @@ function Header() {
 
   // Toggle Functionality
   const [isOpen, setIsOpen] = useState(false);
-  /* const handleToggle = () => {
-    setIsOpen(!isOpen);
-  }; */
 
   // Toggle Profile
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  /*   const handleProfileToggle = () => {
-    setIsProfileOpen(!isProfileOpen);
-  }; */
 
   // Sign Out Functionality
   const logout = async (event: any) => {
     event.preventDefault();
     try {
       await signOut(auth);
-      /*   setIsUserLoggedIn(false); */
       window.location.href = router.asPath; // Redirect the page when user logs out
     } catch (error) {
       console.log(error);
@@ -77,44 +70,40 @@ function Header() {
   }, []);
 
   return (
-    <header className="flex justify-center  items-center h-16 sticky top-0 left-0 right-0 bg-slate-950 z-50  ">
-      {/*  <h1 className="text-2xl m-2 text-center bg-red-500 p-2">
-        Under Construction
-      </h1> */}
-      <div className="flex justify-center  gap-8 items-center max-w-[960px] mx-4 w-full">
-        <div className="flex justify-center w-full  items-center ">
-          <Link key="2" className="mr-4 w-10 -mt-2 " href="/">
-            {/*  <ResponsiveImage /> */}
-            <img className=" w-full " src="/favicon.ico" />
+    <header className="flex justify-center items-center h-16 sticky top-0 left-0 right-0 bg-slate-950 z-50 ">
+      <div className="flex justify-center items-center w-full max-w-full sm:max-w-[640px] md:max-w-[768px] lg:max-w-[1000px] mx-4 ">
+        <div className="flex  w-full items-center ">
+          <Link key="2" className="mr-4 w-8 md:w-10 -mt-2" href="/">
+            <img className="w-full" src="/favicon.ico" />
           </Link>
-          <div className="flex flex-1 ">
-            <div className="flex  relative hover:bg-slate-800 h-16 w-32 ">
+          <div className="flex text-xs md:text-base ">
+            <div className="flex relative hover:bg-slate-800 h-16 w-16 md:w-32">
               <Link
                 key="1"
                 href="/all-movies"
-                className="flex justify-center text-center  items-center w-full  "
+                className="flex justify-center text-center items-center w-full"
               >
                 All movies
               </Link>
             </div>
             <div
-              className="flex relative hover:bg-slate-800 h-16 w-32   "
+              className="flex relative hover:bg-slate-800 h-16 w-20 md:w-32"
               onMouseEnter={() => setIsOpen(true)}
               onMouseLeave={() => setIsOpen(false)}
             >
-              <button className=" text-center items-center w-full ">
+              <button className="text-center items-center w-full">
                 Genres
               </button>
 
               {isOpen && (
-                <div className="absolute flex flex-col   left-1/2 top-16 -translate-x-1/2 bg-slate-800 text-gray-200  w-full text-sm font-semibold border-t-[1px] border-gray-600  ">
+                <div className="absolute flex flex-col left-1/2 top-16 -translate-x-1/2 bg-slate-800 text-gray-200 w-full text-[0.6rem] md:text-base font-semibold border-t-[1px] border-gray-600 ">
                   {genres.map((genre: any, index: any) => (
                     <Link key={index} href={`/genres/${genre.name}`}>
                       <ul>
                         <li
                           key={index}
                           id={genre.name}
-                          className="text-left p-1 px-2 border-b-[1px] border-gray-600 hover:text-green-400 hover:bg-slate-700  "
+                          className="text-left p-1 px-2 border-b-[1px] border-gray-600 hover:text-green-400 hover:bg-slate-700"
                           onClick={() => setActiveItem(genre.id)}
                         >
                           {genre.name}
@@ -128,8 +117,8 @@ function Header() {
           </div>
         </div>
 
-        <div>
-          <form onSubmit={handleSearch}>
+        <div className="flex-grow mr-4 md:mr-6">
+          <form onSubmit={handleSearch} className="flex justify-end">
             <input
               type="search"
               id="search"
@@ -137,57 +126,44 @@ function Header() {
               placeholder="Search"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-32 md:w-64 h-8 rounded-3xl p-2 text-m text-black outline-none"
+              className="w-16 sm:w-32 md:w-64  h-8 rounded-3xl p-2 text-[10px] md:text-base text-black outline-none"
             />
           </form>
         </div>
-        <div className="flex relative  ">
+        <div className="flex relative text-xs md:text-base">
           {isRegisterVisible && (
             <Register handleCloseSignInForm={handleCloseSignInForm} />
           )}
-          {/* {isRegisterVisible && (
-            <Register
-              handleCloseRegister={handleCloseRegister}
-              isTrue={isTrue}
-            />
-          )}{" "} */}
           {isLoginVisible && (
             <Login handleCloseLoginForm={handleCloseLoginForm} />
           )}
 
           {currentUser ? (
-            <div className="flex relative justify-center items-center  px-2 hover:bg-slate-800  hover:border-black h-10  rounded-t-md  ">
+            <div className="flex relative justify-center items-center px-2 hover:bg-slate-800 hover:border-black h-10 rounded-t-md">
               <button
                 onMouseEnter={() => setIsProfileOpen(true)}
                 onMouseLeave={() => setIsProfileOpen(false)}
-                className=" h-16 min-w-24 max-w-36 font-bold truncate "
+                className="h-16 max-w-16 md:w-full md:max-w-36 font-bold truncate"
               >
                 {auth?.currentUser?.displayName || auth?.currentUser?.email}
               </button>
               <div className={isProfileOpen ? "absolute top-full w-full" : ""}>
                 {isProfileOpen && (
                   <div
-                    className="  bg-slate-800 overflow-hidden shadow-xl rounded-b-md "
+                    className="bg-slate-800 overflow-hidden shadow-xl rounded-b-md inline-block w-full"
                     onMouseEnter={() => setIsProfileOpen(true)}
                     onMouseLeave={() => setIsProfileOpen(false)}
                   >
                     <Link
                       href={`/user/${auth?.currentUser?.email}/movies`}
-                      className="block px-4 py-2 text-gray-200 border-t-[1px] border-gray-600 hover:text-green-400 hover:bg-slate-700 "
+                      className="block text-center  py-2 text-gray-200 border-t-[1px] border-gray-600 hover:text-green-400 hover:bg-slate-700"
                     >
                       Collection
                     </Link>
-                    {/*   <a
-                      href="#"
-                      className="block px-4 py-2 text-gray-200 border-t-[1px] border-gray-600 hover:text-green-400 hover:bg-slate-700  "
-                    >
-                      Profile
-                    </a> */}
-
                     <Link
                       onClick={logout}
                       href="/"
-                      className="block px-4 py-2 text-gray-200 border-t-[1px] border-gray-600 hover:text-green-400 hover:bg-slate-700  "
+                      className="block  text-center  py-2 text-gray-200 border-t-[1px] border-gray-600 hover:text-green-400 hover:bg-slate-700 "
                     >
                       Sign Out
                     </Link>
@@ -196,7 +172,7 @@ function Header() {
               </div>
             </div>
           ) : (
-            <div className="flex justify-center items-center gap-6">
+            <div className="flex justify-center items-center gap-3 md:gap-6">
               <button
                 onClick={handleOpenLoginForm}
                 className="hover:text-green-400"
