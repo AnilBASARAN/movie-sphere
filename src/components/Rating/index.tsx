@@ -52,7 +52,10 @@ export default function Ratings({
       </button>
       <Rating
         sx={{
-          fontSize: "2.4rem",
+          fontSize: {
+            xs: "1.5rem",
+            md: "2.5rem",
+          },
         }}
         name="text-feedback"
         precision={0.5}
