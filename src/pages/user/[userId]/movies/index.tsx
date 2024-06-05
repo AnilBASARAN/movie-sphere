@@ -93,19 +93,19 @@ const Movies: React.FC = () => {
     <>
       <div className="flex flex-col items-center justify-start text-sm min-h-[78vh] ">
         {sortedMovies && sortedMovies.length > 0 && (
-          <div className="flex w-[1000px] mt-4 border-b  text-gray-400">
-            <div className="flex-1 font-semibold">
-              <h1>
+          <div className="sm:flex w-full max-w-[1000px] mt-4 border-b border-b-slate-600 mx-4 px-4 lg:px-0 text-gray-400 text-[10px] md:text-sm font-semibold">
+            <div className=" flex-1  ">
+              <h1 className="">
                 {sortedMovies.length}{" "}
                 {sortedMovies.length > 1 ? "Films" : "Film"}
               </h1>
             </div>
-            <div className="flex gap-6">
+            <div className="flex  gap-1 sm:gap-2  md:gap-6  ">
               <button
                 onClick={() => sortMovies("whenRated")}
-                className="hover:text-gray-200 font-semibold focus:text-green-600"
+                className="hover:text-gray-200  focus:text-green-600 text-start "
               >
-                When Added{" "}
+                When Rated{" "}
                 <span className="text-xs">
                   {sortConfig.key === "whenRated"
                     ? sortConfig.direction === "asc"
@@ -117,7 +117,7 @@ const Movies: React.FC = () => {
 
               <button
                 onClick={() => sortMovies("releaseDate")}
-                className="hover:text-gray-200 font-semibold focus:text-green-600"
+                className="hover:text-gray-200  focus:text-green-600 text-start"
               >
                 Release Date{" "}
                 <span className="text-xs">
@@ -130,7 +130,7 @@ const Movies: React.FC = () => {
               </button>
               <button
                 onClick={() => sortMovies("userRating")}
-                className="hover:text-gray-200 font-semibold focus:text-green-600"
+                className="hover:text-gray-200  focus:text-green-600 text-start"
               >
                 Your Rating{" "}
                 <span className="text-xs">
@@ -143,7 +143,7 @@ const Movies: React.FC = () => {
               </button>
               <button
                 onClick={() => sortMovies("averageRating")}
-                className="hover:text-gray-200 font-semibold focus:text-green-600"
+                className="hover:text-gray-200  focus:text-green-600 text-start"
               >
                 Average Rating{" "}
                 <span className="text-xs">
@@ -157,12 +157,12 @@ const Movies: React.FC = () => {
             </div>
           </div>
         )}
-        <div className="grid grid-cols-7  justify-center w-[1000px] gap-3 m-4">
+        <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-7 text-center  justify-center max-w-[1000px] gap-3 m-4">
           {sortedMovies &&
             sortedMovies.slice(0, visibleMovies).map((movie) => (
               <div key={movie.movieId}>
                 <Link href={`/movie/${movie.movieId}`} className="movie">
-                  <div className="relative flex text-center justify-center h-[88%]  cursor-pointer border rounded-sm border-gray-800 hover:border-green-400 shadow-lg group">
+                  <div className="relative flex  justify-center h-[82%] md:h-[88%]  cursor-pointer border rounded-sm border-gray-800 hover:border-green-400 shadow-lg group">
                     <img
                       src={
                         movie.posterPath
