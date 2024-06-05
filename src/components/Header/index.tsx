@@ -40,15 +40,22 @@ function Header() {
 
   // Toggle Functionality
   const [isOpen, setIsOpen] = useState(false);
+  /* const handleToggle = () => {
+    setIsOpen(!isOpen);
+  }; */
 
   // Toggle Profile
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  /*   const handleProfileToggle = () => {
+    setIsProfileOpen(!isProfileOpen);
+  }; */
 
   // Sign Out Functionality
   const logout = async (event: any) => {
     event.preventDefault();
     try {
       await signOut(auth);
+      /*   setIsUserLoggedIn(false); */
       window.location.href = router.asPath; // Redirect the page when user logs out
     } catch (error) {
       console.log(error);
