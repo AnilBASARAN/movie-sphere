@@ -135,7 +135,7 @@ function Header() {
               placeholder="Search"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-16 sm:w-32 md:w-64  h-8 rounded-3xl p-2 text-[10px] md:text-base text-black outline-none"
+              className="w-20 sm:w-40 md:w-64  h-8 rounded-3xl p-2 text-[10px] md:text-base text-black outline-none"
             />
           </form>
         </div>
