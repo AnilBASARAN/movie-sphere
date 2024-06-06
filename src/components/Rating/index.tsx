@@ -25,7 +25,7 @@ export default function Ratings({
   };
 
   const handleDelete = async () => {
-    if (initialValue !== 0) {
+    if (value !== 0) {
       await deleteMovie(movies);
       window.location.reload();
     }
