@@ -97,6 +97,8 @@ function Header() {
               className="flex relative hover:bg-slate-800 h-16 w-20 md:w-32"
               onMouseEnter={() => setIsOpen(true)}
               onMouseLeave={() => setIsOpen(false)}
+              /* onTouchStart={() => setIsOpen(true)}
+              onTouchEnd={() => setIsOpen(false)} */
             >
               <button className="text-center items-center w-full">
                 Genres
@@ -111,7 +113,7 @@ function Header() {
                           key={index}
                           id={genre.name}
                           className="text-left p-1 px-2 border-b-[1px] border-gray-600 hover:text-green-400 hover:bg-slate-700"
-                          onClick={() => setActiveItem(genre.id)}
+                          onClick={() => setIsOpen(false)}
                         >
                           {genre.name}
                         </li>
@@ -164,6 +166,7 @@ function Header() {
                     <Link
                       href={`/user/${auth?.currentUser?.email}/movies`}
                       className="block text-center  py-2 text-gray-200 border-t-[1px] border-gray-600 hover:text-green-400 hover:bg-slate-700"
+                      onClick={() => setIsProfileOpen(false)}
                     >
                       Collection
                     </Link>
