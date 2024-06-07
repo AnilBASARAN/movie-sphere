@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import { MainContext } from "@/components/Context/context";
-import { useContext, useState } from "react";
+/* import { MainContext } from "@/components/Context/context"; */
+import { /*  useContext, */ useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { genres } from "@/pages/api/api";
@@ -11,7 +11,7 @@ import { signOut } from "firebase/auth";
 
 function Header() {
   const router = useRouter();
-  const { setActiveItem /* ResponsiveImage */ } = useContext<any>(MainContext);
+  /*  const { setActiveItem} = useContext<any>(MainContext); */
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [isRegisterVisible, setIsRegisterVisible] = useState<boolean>(false);
   const [isLoginVisible, setIsLoginVisible] = useState<boolean>(false);
@@ -65,7 +65,9 @@ function Header() {
   // Search Functionality
   const handleSearch = (e: any) => {
     e.preventDefault();
-    router.push(`/search/movie/${searchTerm}`);
+    if (searchTerm) {
+      router.push(`/search/movie/${searchTerm}`);
+    }
   };
 
   // Listen for changes in authentication state
@@ -135,7 +137,7 @@ function Header() {
               placeholder="Search"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-20 sm:w-40 md:w-64  h-8 rounded-3xl p-2 text-[10px] md:text-base text-black outline-none"
+              className="w-20 sm:w-40 md:w-64  h-8 rounded-3xl p-2 text-xs md:text-base text-black outline-none"
             />
           </form>
         </div>
