@@ -8,7 +8,7 @@ const Stars: React.FC<{ rating: number }> = ({ rating }) => {
   for (let i = 1; i <= 5; i++) {
     if (i <= filledStars) {
       stars.push(
-        <span key={i} className="text-yellow-400 text-lg">
+        <span key={i} className="text-yellow-400 text-xs sm:text-lg">
           &#9733;
         </span>
       );
@@ -19,14 +19,14 @@ const Stars: React.FC<{ rating: number }> = ({ rating }) => {
             className="absolute"
             style={{ width: `${remainder * 100}%`, overflow: "hidden" }}
           >
-            <span className="text-yellow-400 text-lg">&#9733;</span>
+            <span className="text-yellow-400 text-xs sm:text-lg">&#9733;</span>
           </span>
-          <span className="text-gray-700 text-lg">&#9733;</span>
+          <span className="text-gray-700 text-xs sm:text-lg">&#9733;</span>
         </span>
       );
     } else {
       stars.push(
-        <span key={i} className="text-gray-700 text-lg">
+        <span key={i} className="text-gray-700 text-xs sm:text-lg">
           &#9733;
         </span>
       );
