@@ -54,7 +54,7 @@ export default function Ratings({
         sx={{
           fontSize: {
             xs: "1.5rem",
-            md: "2.5rem",
+            lg: "2.5rem",
           },
         }}
         name="text-feedback"
