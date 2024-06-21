@@ -47,14 +47,6 @@ const Movies: React.FC = () => {
     return () => unsubscribe();
   }, [router.query]);
 
-  /*   useEffect(() => {
-    if (router.query) {
-      setCurrentPage(router.query.userId);
-    } else {
-      setCurrentPage(1);
-    }
-  }, [router.query]); */
-
   const sortMovies = (key: any) => {
     let direction = "desc";
     if (sortConfig.key === key && sortConfig.direction === "desc") {
@@ -75,25 +67,13 @@ const Movies: React.FC = () => {
     setSortConfig({ key, direction });
   };
 
-  /*   // Pagination
-  const goToPage = (page: number) => {
-    setCurrentPage(page);
-    router.push(`/?&page=${page}`);
-  };
-
-  // Get All The Movies Method
-  const handleMovies = async (page: any) => {
-    const data = await getMovies(`${API_URL}&page=${page || 1}`);
-    setMovies(data);
-  }; */
-
   console.log(auth?.currentUser);
 
   return (
     <>
       <div className="flex flex-col items-center justify-start text-sm min-h-[78vh] ">
         {sortedMovies && sortedMovies.length > 0 && (
-          <div className="sm:flex w-full max-w-[1000px] mt-4 border-b border-b-slate-600 mx-4 px-4 lg:px-0 text-gray-400 text-[10px] md:text-sm font-semibold">
+          <div className="xs:flex w-full max-w-[1000px] mt-4 border-b border-b-slate-600 mx-4 px-4 lg:px-0 text-gray-400 text-[9px] sm:text-xs md:text-sm font-semibold">
             <div className=" flex-1  ">
               <h1 className="">
                 {sortedMovies.length}{" "}
@@ -157,12 +137,12 @@ const Movies: React.FC = () => {
             </div>
           </div>
         )}
-        <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-7 text-center  justify-center max-w-[1000px] gap-3 m-4">
+        <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-7 text-center justify-center max-w-[1000px] gap-3 m-4">
           {sortedMovies &&
             sortedMovies.slice(0, visibleMovies).map((movie) => (
               <div key={movie.movieId}>
                 <Link href={`/movie/${movie.movieId}`} className="movie">
-                  <div className="relative flex  justify-center h-[82%] md:h-[88%]  cursor-pointer border rounded-sm border-gray-800 hover:border-green-400 shadow-lg group">
+                  <div className="relative flex justify-center h-[82%] md:h-[88%] cursor-pointer border rounded-sm border-gray-800 hover:border-green-400 shadow-lg group">
                     <img
                       src={
                         movie.posterPath
@@ -170,7 +150,7 @@ const Movies: React.FC = () => {
                           : "/noimage.jpg"
                       }
                       alt={movie.title || "No Title"}
-                      className=""
+                      className="min-w-[80px] md:min-w-[120px] max-w-full h-auto" // Adjusted image width styles
                     />
                     <div className="absolute w-full h-full flex font-bold items-center justify-center opacity-0 bg-slate-950/[.0] transition group-hover:bg-slate-950/70 group-hover:opacity-100">
                       <h3 className="">{movie.title}</h3>
@@ -181,6 +161,7 @@ const Movies: React.FC = () => {
               </div>
             ))}
         </div>
+
         {sortedMovies?.length == 0 && (
           <div className="flex justify-center items-center align-middle text-xl text-gray-200 ">
             There is no movie here...
