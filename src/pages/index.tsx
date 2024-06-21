@@ -30,28 +30,17 @@ const Home: React.FC = () => {
     setCurrentIndex(slideIndex);
   };
 
-  console.log(movies);
-
   useEffect(() => {
     handleMovies();
+  }, []);
 
-    /* setInterval(() => {
-      if (movies && currentIndex < movies.length) {
-        setCurrentIndex((prev) => prev + 1);
-      } else {
-        setCurrentIndex(0);
-      }
-    }, 1000); */
+  useEffect(() => {
     const interval = setInterval(() => {
-      if (movies && currentIndex < previewMovies.length) {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % previewMovies.length);
-      } else {
-        setCurrentIndex(0);
-      }
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % previewMovies.length);
     }, 7000); // Change image carousel every 7 seconds
 
     return () => clearInterval(interval);
-  }, [previewMovies.length]);
+  }, [currentIndex, previewMovies.length]);
 
   return (
     <>
@@ -71,13 +60,13 @@ const Home: React.FC = () => {
               </Link>
 
               <div
-                className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-slate-200 cursor-pointer scale-y-150   "
+                className="block lg:hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-slate-200 cursor-pointer scale-y-150   "
                 onClick={prevImage}
               >
                 &#706;
               </div>
               <div
-                className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-slate-200 cursor-pointer scale-y-150  "
+                className="block lg:hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-slate-200 cursor-pointer scale-y-150  "
                 onClick={nextImage}
               >
                 &#707;
@@ -92,7 +81,7 @@ const Home: React.FC = () => {
                   <h1>The digital hub for movie buffs</h1>
                 </div>
               </div>
-              <div className="flex justify-center -mt-12 items-end py-2 font-bold text-slate-400 gap-1  ">
+              <div className="hidden justify-center -mt-12 items-end py-2 font-bold text-slate-400 gap-1 lg:flex">
                 {previewMovies &&
                   previewMovies.map((movie: string, index: number) => (
                     <div
