@@ -375,11 +375,11 @@ const Movies: React.FC = () => {
             <div className="text-slate-400 mt-4 text-xs md:text-sm">
               <p>{movies.overview}</p>
             </div>
-            <div className="mt-4 flex gap-1 md:gap-2 text-[10px] md:text-base">
+            <div className="flex-wrap mt-4 flex gap-1 md:gap-2 text-[10px] md:text-base">
               {movies.genres?.map((genre: any) => (
                 <Link
                   href={`/genres/${genre.name}`}
-                  className="bg-slate-800 px-2 py-1 rounded-md text-slate-400 hover:text-slate-100"
+                  className=" bg-slate-800 px-2 py-1 rounded-md text-slate-400 hover:text-slate-100"
                   key={genre.name}
                 >
                   {genre.name}{" "}
