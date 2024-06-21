@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import { MainContext } from "@/components/Context/context";
-import { useContext, useState } from "react";
+/* import { MainContext } from "@/components/Context/context"; */
+import { /*  useContext, */ useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { genres } from "@/pages/api/api";
@@ -11,7 +11,7 @@ import { signOut } from "firebase/auth";
 
 function Header() {
   const router = useRouter();
-  const { setActiveItem /* ResponsiveImage */ } = useContext<any>(MainContext);
+  /*  const { setActiveItem} = useContext<any>(MainContext); */
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [isRegisterVisible, setIsRegisterVisible] = useState<boolean>(false);
   const [isLoginVisible, setIsLoginVisible] = useState<boolean>(false);
@@ -65,7 +65,9 @@ function Header() {
   // Search Functionality
   const handleSearch = (e: any) => {
     e.preventDefault();
-    router.push(`/search/movie/${searchTerm}`);
+    if (searchTerm) {
+      router.push(`/search/movie/${searchTerm}`);
+    }
   };
 
   // Listen for changes in authentication state
@@ -77,8 +79,8 @@ function Header() {
   }, []);
 
   return (
-    <header className="flex justify-center items-center h-16 sticky top-0 left-0 right-0 bg-slate-950 z-50 ">
-      <div className="flex justify-center items-center w-full max-w-full sm:max-w-[640px] md:max-w-[768px] lg:max-w-[1000px] mx-4 ">
+    <header className="flex justify-center items-center h-16 sticky top-0 left-0 right-0 bg-slate-950 z-50  ">
+      <div className="flex justify-center items-center w-full sm:max-w-[768px] md:max-w-[1000px]  mx-4 ">
         <div className="flex  w-full items-center ">
           <Link key="2" className="mr-4 w-8 md:w-10 -mt-2" href="/">
             <img className="w-full" src="/favicon.ico" />
@@ -97,6 +99,8 @@ function Header() {
               className="flex relative hover:bg-slate-800 h-16 w-20 md:w-32"
               onMouseEnter={() => setIsOpen(true)}
               onMouseLeave={() => setIsOpen(false)}
+              /* onTouchStart={() => setIsOpen(true)}
+              onTouchEnd={() => setIsOpen(false)} */
             >
               <button className="text-center items-center w-full">
                 Genres
@@ -111,7 +115,7 @@ function Header() {
                           key={index}
                           id={genre.name}
                           className="text-left p-1 px-2 border-b-[1px] border-gray-600 hover:text-green-400 hover:bg-slate-700"
-                          onClick={() => setActiveItem(genre.id)}
+                          onClick={() => setIsOpen(false)}
                         >
                           {genre.name}
                         </li>
@@ -124,7 +128,7 @@ function Header() {
           </div>
         </div>
 
-        <div className="flex-grow mr-4 md:mr-6">
+        <div className="flex-grow mr-4 md:mr-10 w-full">
           <form onSubmit={handleSearch} className="flex justify-end">
             <input
               type="search"
@@ -133,10 +137,11 @@ function Header() {
               placeholder="Search"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-16 sm:w-32 md:w-64  h-8 rounded-3xl p-2 text-[10px] md:text-base text-black outline-none"
+              className="min-w-10 w-full  sm:w-64 h-8 rounded-3xl p-2 text-xs md:text-base text-black outline-none"
             />
           </form>
         </div>
+
         <div className="flex relative text-xs md:text-base">
           {isRegisterVisible && (
             <Register handleCloseSignInForm={handleCloseSignInForm} />
@@ -164,6 +169,7 @@ function Header() {
                     <Link
                       href={`/user/${auth?.currentUser?.email}/movies`}
                       className="block text-center  py-2 text-gray-200 border-t-[1px] border-gray-600 hover:text-green-400 hover:bg-slate-700"
+                      onClick={() => setIsProfileOpen(false)}
                     >
                       Collection
                     </Link>
@@ -179,7 +185,7 @@ function Header() {
               </div>
             </div>
           ) : (
-            <div className="flex justify-center items-center gap-3 md:gap-6">
+            <div className="flex justify-center items-center gap-3 md:gap-10">
               <button
                 onClick={handleOpenLoginForm}
                 className="hover:text-green-400"

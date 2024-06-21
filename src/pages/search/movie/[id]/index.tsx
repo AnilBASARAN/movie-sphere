@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { getMovies, IMG_URL, searchURL } from "@/pages/api/api";
+import {
+  getMovies,
+  IMG_URL,
+  searchURL,
+  /*   SEARCH_PEOPLE,
+  BASE_URL,
+  API_KEY, */
+} from "@/pages/api/api";
 import ToggleText from "@/pages/api/methods/toggleText";
 import Pagination from "@/pages/api/methods/pagination";
 
@@ -30,6 +37,18 @@ const Search: React.FC = () => {
     }
   };
 
+  /*   const handleSearchPerson = async (page: number) => {
+    if (query.id) {
+      const data = await getMovies(
+        `${SEARCH_PEOPLE}&query=${query.id}&page=${page || 1} `
+      );
+      const returnedData = await getMovies(
+        `${BASE_URL}/person/${query.id}?${API_KEY}&language=en-US&append_to_response=movie_credits `
+      );
+      console.log(returnedData);
+    }
+  }; */
+
   // Get Pages From URL
   useEffect(() => {
     if (query.page) {
@@ -38,6 +57,7 @@ const Search: React.FC = () => {
       setCurrentPage(1);
     }
     handleSearch(parseInt(query.page));
+    /* handleSearchPerson(parseInt(query.page)); */
   }, [query]);
 
   return (

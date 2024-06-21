@@ -18,22 +18,9 @@
   margin: 0;
 }
 
-/* html,
-body {
-  max-width: 100vw;
-  min-height: 100vh;
-} */
-
 body {
   background-color: rgb(12, 17, 27);
   color: #fff;
-  /* color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb)); */
 }
 
 a {
@@ -61,7 +48,3 @@ a {
 .vote-low {
   @apply text-red-600 mt-5;
 }
-
-/* .star-svg {
-  fill: rgb(12, 17, 27);
-} */

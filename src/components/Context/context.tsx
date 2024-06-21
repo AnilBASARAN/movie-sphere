@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext /* useEffect */ } from "react";
 import { useState } from "react";
 
 type ThemeContext = {
@@ -31,6 +31,38 @@ export const MainProvider = ({ children }: any) => {
   const refreshPage = () => {
     window.location.reload();
   };
+
+  /*   const ResponsiveImage = () => {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+      // Function to check the window width
+      const checkWidth = () => {
+        setIsMobile(window.innerWidth < 768);
+      };
+
+      // Check the width initially
+      checkWidth();
+
+      // Add event listener to update the state on window resize
+      window.addEventListener("resize", checkWidth);
+
+      // Cleanup the event listener on component unmount
+      return () => {
+        window.removeEventListener("resize", checkWidth);
+      };
+    }, []);
+
+    return (
+      <div>
+        {isMobile ? (
+          <img src="/favicon.ico" alt="Mobile Image" />
+        ) : (
+          <img src="/logo.png" alt="Desktop Image" />
+        )}
+      </div>
+    );
+  }; */
 
   // Get All The Data Based On Their Type
   /*  const handleMovies = async (genre: any) => {
@@ -69,6 +101,7 @@ export const MainProvider = ({ children }: any) => {
     setIsUserLoggedIn,
     initialMovieInfo,
     setInitialMovieInfo,
+    /*     ResponsiveImage, */
   };
 
   return (
