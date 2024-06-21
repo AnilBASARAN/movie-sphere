@@ -79,8 +79,8 @@ function Header() {
   }, []);
 
   return (
-    <header className="flex justify-center items-center h-16 sticky top-0 left-0 right-0 bg-slate-950 z-50 ">
-      <div className="flex justify-center items-center w-full max-w-full sm:max-w-[640px] md:max-w-[768px] lg:max-w-[1000px] mx-4 ">
+    <header className="flex justify-center items-center h-16 sticky top-0 left-0 right-0 bg-slate-950 z-50  ">
+      <div className="flex justify-center items-center w-full sm:max-w-[768px] md:max-w-[1000px]  mx-4 ">
         <div className="flex  w-full items-center ">
           <Link key="2" className="mr-4 w-8 md:w-10 -mt-2" href="/">
             <img className="w-full" src="/favicon.ico" />
@@ -128,7 +128,7 @@ function Header() {
           </div>
         </div>
 
-        <div className="flex-grow mr-4 md:mr-6">
+        <div className="flex-grow mr-4 md:mr-10 w-full">
           <form onSubmit={handleSearch} className="flex justify-end">
             <input
               type="search"
@@ -137,10 +137,11 @@ function Header() {
               placeholder="Search"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-20 sm:w-40 md:w-64  h-8 rounded-3xl p-2 text-xs md:text-base text-black outline-none"
+              className="min-w-10 w-full  sm:w-64 h-8 rounded-3xl p-2 text-xs md:text-base text-black outline-none"
             />
           </form>
         </div>
+
         <div className="flex relative text-xs md:text-base">
           {isRegisterVisible && (
             <Register handleCloseSignInForm={handleCloseSignInForm} />
@@ -184,7 +185,7 @@ function Header() {
               </div>
             </div>
           ) : (
-            <div className="flex justify-center items-center gap-3 md:gap-6">
+            <div className="flex justify-center items-center gap-3 md:gap-10">
               <button
                 onClick={handleOpenLoginForm}
                 className="hover:text-green-400"
