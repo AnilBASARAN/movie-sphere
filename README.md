@@ -1,6 +1,4 @@
-# IN DEVELOPMENT
-
-## MovieSphere
+# MovieSphere
 
 First, run the development server:
 
@@ -13,11 +11,12 @@ pnpm dev
 # or
 bun dev
 ```
+- It's a movie rating site similar to letterboxd.
 
-- It's a movie site similar to letterboxd but with playing movie feature.
+- You can watch, rate, log movies and have a collection.
 
-- You can watch, rate, log movies and make lists. (Under Construction)
-
-- You can register your profile and login to start rating stars to movies (Under Construction)
+- You can sign in and start rating stars to movies.
 
 - Next Js, Tailwind, Typescript
+
+![Movie-Sphere](https://github.com/Kaskaya/movie-sphere/assets/124313888/4844687b-53e8-469d-b546-57af751a7703)
